@@ -6,7 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/wall_paper"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:context=".TrangAdminActivity">
 
     <Button
             android:text="@string/ng_xu_t"
@@ -15,6 +16,7 @@
             android:id="@+id/btn_logOut"/>
 
     <EditText
+            android:id="@+id/edt_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -22,18 +24,18 @@
             android:hint="@string/search"
             android:drawableStart="@drawable/baseline_search_24"
             android:drawablePadding="10dp"
-            android:textColorHint="@color/gray01"
+            android:textColorHint="#757575"
             android:background="@android:color/white"
-            android:padding="10dp"/>
+            android:padding="10dp" android:minHeight="48dp" android:autofillHints="" android:inputType="text"/>
 
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_gravity="bottom"
             tools:listitem="@layout/layout_theloai"
-            android:padding="10dp"/>
+            android:padding="10dp" android:id="@+id/rvTheLoai"/>
 
     <LinearLayout
             android:id="@+id/linearLayout"
@@ -54,11 +56,11 @@
                 android:id="@+id/add_pdfTab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:backgroundTint="@color/purple_500"
                 app:fabCustomSize="50dp"
                 app:tint="@color/white"
-                android:src="@drawable/baseline_picture_as_pdf_24"/>
+                android:src="@drawable/baseline_picture_as_pdf_24" android:contentDescription="@string/todo"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -14,4 +14,8 @@
     <string name="th_m">Thêm</string>
     <string name="search">Search</string>
     <string name="todo">TODO</string>
+    <string name="t_n_truy_n">Tên truyện</string>
+    <string name="truy_n_description">Truyện description</string>
+    <string name="th_lo_i_truy_n">Thể loại truyện</string>
+    <string name="th_m_truy_n">Thêm truyện</string>
 </resources>

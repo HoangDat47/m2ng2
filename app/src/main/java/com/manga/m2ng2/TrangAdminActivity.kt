@@ -23,6 +23,9 @@ class TrangAdminActivity : AppCompatActivity() {
             auth.signOut()
             checkUser()
         }
+        binding.btnThemTheLoai.setOnClickListener {
+            startActivity(Intent(this, ThemTheLoaiActivity::class.java))
+        }
     }
 
     private fun checkUser() {

@@ -31,7 +31,7 @@
                     app:hintEnabled="false"
                     android:id="@+id/til_name">
                 <EditText
-                        android:id="@+id/et_name"
+                        android:id="@+id/etName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"

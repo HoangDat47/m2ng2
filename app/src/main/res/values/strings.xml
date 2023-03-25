@@ -9,4 +9,9 @@
     <string name="t_n_t_i_kho_n">Tên tài khoản</string>
     <string name="nh_p_l_i_m_t_kh_u">Nhập lại mật khẩu</string>
     <string name="ng_xu_t">Đăng xuất</string>
+    <string name="th_m_th_lo_i">Thêm thể loại</string>
+    <string name="th_lo_i">Thể loại</string>
+    <string name="th_m">Thêm</string>
+    <string name="search">Search</string>
+    <string name="todo">TODO</string>
 </resources>

@@ -2,11 +2,13 @@ package com.manga.m2ng2.adapter
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
+import com.manga.m2ng2.TruyenListAdminActivity
 import com.manga.m2ng2.databinding.LayoutTheloaiBinding
 import com.manga.m2ng2.model.TheLoaiModel
 
@@ -47,6 +49,13 @@ class TheLoaiAdapter(private var ds: ArrayList<TheLoaiModel>) :
                     dialog.dismiss()
                 }
                 .show()
+        }
+        //item click go to TruyenListAdminActivity
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, TruyenListAdminActivity::class.java)
+            intent.putExtra("theLoaiId", theLoai.id)
+            intent.putExtra("tenTheLoai", theLoai.theLoai)
+            holder.itemView.context.startActivity(intent)
         }
     }
 

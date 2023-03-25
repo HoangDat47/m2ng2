@@ -6,13 +6,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.manga.m2ng2.adapter.TheLoaiAdapter
 import com.manga.m2ng2.databinding.ActivityTrangAdminBinding
-import com.manga.m2ng2.model.FilterTheLoai
+import com.manga.m2ng2.tools.FilterTheLoai
 import com.manga.m2ng2.model.TheLoaiModel
 
 class TrangAdminActivity : AppCompatActivity() {

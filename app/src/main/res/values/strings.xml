@@ -18,4 +18,6 @@
     <string name="truy_n_description">Truyện description</string>
     <string name="th_lo_i_truy_n">Thể loại truyện</string>
     <string name="th_m_truy_n">Thêm truyện</string>
+    <string name="example_title">Example Title</string>
+    <string name="example_date">Example Date</string>
 </resources>

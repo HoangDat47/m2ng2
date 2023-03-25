@@ -27,7 +27,9 @@ class ThemPDFActivity : AppCompatActivity() {
     private lateinit var ds: ArrayList<TheLoaiModel>
     private lateinit var storageReference: StorageReference
     private val TAG = "ThemPDFActivity"
+    private var hashMap: HashMap<String, Any> = HashMap()
     private var pdfUri: Uri? = null
+    private var selectedTheLoaiId: String? = null
     private var title = ""
     private var desc = ""
     private var theLoai = ""
@@ -77,7 +79,8 @@ class ThemPDFActivity : AppCompatActivity() {
 
     private fun uploadPDF() {
         Log.d(TAG, "uploadPDF: BẮT ĐẦU UPLOAD PDF")
-        var timestamp = System.currentTimeMillis().toString()
+        var timestamp = System.currentTimeMillis()
+        val timeString = timestamp.toString()
         var filePathAndName = "Truyens/$timestamp"
         storageReference = FirebaseStorage.getInstance().getReference(filePathAndName)
         storageReference.putFile(pdfUri!!).addOnSuccessListener {
@@ -85,19 +88,18 @@ class ThemPDFActivity : AppCompatActivity() {
             val uriTask = it.storage.downloadUrl
             while (!uriTask.isSuccessful);
             val downloadUri = uriTask.result
-            uploadPDFToDb(downloadUri, timestamp)
+            uploadPDFToDb(downloadUri, timeString)
         }
     }
 
     private fun uploadPDFToDb(downloadUri: Uri?, timestamp: String) {
         Log.d(TAG, "uploadPDFToDb: BẮT ĐẦU UPLOAD PDF TO DB")
         var uid = auth.uid
-        var hashMap: HashMap<String, Any> = HashMap()
         hashMap["uid"] = uid.toString()
         hashMap["id"] = timestamp
         hashMap["title"] = title
         hashMap["desc"] = desc
-        hashMap["theLoai"] = theLoai
+        hashMap["theLoaiId"] = selectedTheLoaiId!! // Sử dụng giá trị của selectedTheLoaiId
         hashMap["pdfUrl"] = downloadUri.toString()
         hashMap["timestamp"] = timestamp
 
@@ -114,6 +116,7 @@ class ThemPDFActivity : AppCompatActivity() {
                 Toast.makeText(this, "Lỗi: ${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
     private fun loadTheLoai() {
         Log.d(TAG, "loadTheLoai: BẮT ĐẦU LOAD THỂ LOẠI")
         ds = arrayListOf<TheLoaiModel>()
@@ -124,9 +127,11 @@ class ThemPDFActivity : AppCompatActivity() {
                 ds.clear()
                 for (data in snapshot.children) {
                     val theLoai = data.getValue(TheLoaiModel::class.java)
+                    val theloaiId = data.key
                     if (theLoai != null) {
+                        theLoai.id = theloaiId.toString() // set id cho đối tượng
                         ds.add(theLoai)
-                        Log.d(TAG, "onDataChange: ${theLoai.theLoai}")
+                        Log.d(TAG, "onDataChange: ${theLoai.id} - ${theLoai.theLoai}")
                     }
                 }
             }
@@ -139,11 +144,15 @@ class ThemPDFActivity : AppCompatActivity() {
 
 
     private fun theLoaiPickDialog() {
-        val items = ds.map { it.theLoai }.toTypedArray() // Lấy danh sách thể loại
+        val items = ds.map { "${it.id} - ${it.theLoai}" }.toTypedArray()
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Chọn thể loại")
             .setItems(items) { _, which ->
                 binding.theLoaiTV.text = items[which]
+                val theLoai = ds[which]
+                selectedTheLoaiId = theLoai.id // Lưu giá trị của theLoaiId được chọn vào biến selectedTheLoaiId
+                hashMap["theLoaiId"] = selectedTheLoaiId!! // Lưu giá trị của theLoaiId vào hashMap
+                Log.d(TAG, "theLoaiPickDialog: id = ${theLoai.id}")
             }
         val dialog = builder.create()
         dialog.show()

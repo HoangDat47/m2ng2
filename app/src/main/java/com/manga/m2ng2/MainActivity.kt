@@ -1,5 +1,6 @@
 package com.manga.m2ng2
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.manga.m2ng2.databinding.ActivityMainBinding
@@ -12,10 +13,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener {
-
+            startActivity(Intent(this, LoginActivity::class.java))
         }
         binding.btnSkipLogin.setOnClickListener {
-
+            startActivity(Intent(this, TrangChuActivity::class.java))
         }
     }
 }

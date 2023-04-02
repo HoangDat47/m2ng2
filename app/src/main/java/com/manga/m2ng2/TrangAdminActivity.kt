@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.manga.m2ng2.adapter.TheLoaiAdapter
 import com.manga.m2ng2.databinding.ActivityTrangAdminBinding
-import com.manga.m2ng2.tools.FilterTheLoai
+import com.manga.m2ng2.tools.FilterTheLoaiAdmin
 import com.manga.m2ng2.model.TheLoaiModel
 
 class TrangAdminActivity : AppCompatActivity() {
@@ -37,7 +37,7 @@ class TrangAdminActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //called as and when user types each letter
                 val originalList = ds.clone() as ArrayList<TheLoaiModel>
-                val filter = FilterTheLoai(originalList, adapter)
+                val filter = FilterTheLoaiAdmin(originalList, adapter)
                 filter.filter(s)
             }
 

@@ -2,11 +2,14 @@ package com.manga.m2ng2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
 import com.manga.m2ng2.adapter.TruyenAdapter
 import com.manga.m2ng2.databinding.ActivityTruyenListAdminBinding
 import com.manga.m2ng2.model.TruyenModel
+import com.manga.m2ng2.tools.FilterTruyenAdmin
 
 class TruyenListAdminActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTruyenListAdminBinding
@@ -24,6 +27,22 @@ class TruyenListAdminActivity : AppCompatActivity() {
             tenTheLoai = it.getString("tenTheLoai")
         }
         loadTruyenList()
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Do nothing
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //called as and when user types each letter
+                val originalList = ds1.clone() as ArrayList<TruyenModel>
+                val filter = FilterTruyenAdmin(originalList, adapter)
+                filter.filter(s)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Do nothing
+            }
+        })
     }
 
     private fun loadTruyenList() {

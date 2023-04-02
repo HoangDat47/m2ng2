@@ -1,5 +1,6 @@
 package com.manga.m2ng2.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,11 @@ import com.manga.m2ng2.tools.DayConvert
 
 class TruyenAdapter (private var ds1: ArrayList<TruyenModel>)
     : RecyclerView.Adapter<TruyenAdapter.truyenViewHolder>() {
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(filtered: ArrayList<TruyenModel>) {
+        ds1 = filtered
+        notifyDataSetChanged()
+    }
     class truyenViewHolder(val binding: LayoutTruyenBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): truyenViewHolder {

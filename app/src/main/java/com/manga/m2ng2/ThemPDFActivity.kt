@@ -30,6 +30,8 @@ class ThemPDFActivity : AppCompatActivity() {
     private var hashMap: HashMap<String, Any> = HashMap()
     private var pdfUri: Uri? = null
     private var selectedTheLoaiId: String? = null
+    private var timestamp = System.currentTimeMillis()
+    private var timeString = timestamp.toString()
     private var title = ""
     private var desc = ""
     private var theLoai = ""
@@ -79,8 +81,6 @@ class ThemPDFActivity : AppCompatActivity() {
 
     private fun uploadPDF() {
         Log.d(TAG, "uploadPDF: BẮT ĐẦU UPLOAD PDF")
-        var timestamp = System.currentTimeMillis()
-        val timeString = timestamp.toString()
         var filePathAndName = "Truyens/$timestamp"
         storageReference = FirebaseStorage.getInstance().getReference(filePathAndName)
         storageReference.putFile(pdfUri!!).addOnSuccessListener {
@@ -88,15 +88,15 @@ class ThemPDFActivity : AppCompatActivity() {
             val uriTask = it.storage.downloadUrl
             while (!uriTask.isSuccessful);
             val downloadUri = uriTask.result
-            uploadPDFToDb(downloadUri, timeString)
+            uploadPDFToDb(downloadUri, timestamp)
         }
     }
 
-    private fun uploadPDFToDb(downloadUri: Uri?, timestamp: String) {
+    private fun uploadPDFToDb(downloadUri: Uri?, timestamp: Long) {
         Log.d(TAG, "uploadPDFToDb: BẮT ĐẦU UPLOAD PDF TO DB")
         var uid = auth.uid
         hashMap["uid"] = uid.toString()
-        hashMap["id"] = timestamp
+        hashMap["id"] = timeString
         hashMap["title"] = title
         hashMap["desc"] = desc
         hashMap["theLoaiId"] = selectedTheLoaiId!! // Sử dụng giá trị của selectedTheLoaiId
@@ -105,7 +105,7 @@ class ThemPDFActivity : AppCompatActivity() {
 
         //db>truyens
         dbRef = FirebaseDatabase.getInstance().getReference("truyens")
-        dbRef.child(timestamp).setValue(hashMap)
+        dbRef.child(timestamp.toString()).setValue(hashMap)
             .addOnSuccessListener {
                 Log.d(TAG, "onSuccess: PDF ĐÃ ĐƯỢC UPLOAD TO DB")
                 Toast.makeText(this, "PDF ĐÃ ĐƯỢC UPLOAD", Toast.LENGTH_SHORT).show()

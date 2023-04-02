@@ -1,14 +1,11 @@
 package com.manga.m2ng2.tools
 
 import android.widget.Filter
-import com.manga.m2ng2.adapter.TheLoaiAdapter
-import com.manga.m2ng2.model.TheLoaiModel
+import com.manga.m2ng2.adapter.TruyenAdapter
+import com.manga.m2ng2.model.TruyenModel
 
-class FilterTheLoai(private var filterList: ArrayList<TheLoaiModel>, private var adapter: TheLoaiAdapter) :
+class FilterTruyenAdmin(private var filterList: ArrayList<TruyenModel>, private var adapter: TruyenAdapter) :
     Filter() {
-
-
-
     // Lọc kết quả và trả về FilterResults
     override fun performFiltering(constraint: CharSequence?): FilterResults {
         val results = FilterResults()
@@ -17,11 +14,11 @@ class FilterTheLoai(private var filterList: ArrayList<TheLoaiModel>, private var
             // Chuyển constraint thành chữ thường để không phân biệt chữ hoa chữ thường
             val constraintLowerCase = constraint.toString().toLowerCase()
             // Tạo một danh sách tạm để lưu kết quả tìm kiếm
-            val filteredList = ArrayList<TheLoaiModel>()
+            val filteredList = ArrayList<TruyenModel>()
             // Lặp qua danh sách gốc và tìm các phần tử khớp với constraint
             if(filterList.size > 0) {
                 for (i in 0 until filterList.size) {
-                    if (filterList[i].theLoai!!.toLowerCase().contains(constraintLowerCase)) {
+                    if (filterList[i].title!!.toLowerCase().contains(constraintLowerCase)) {
                         // Nếu phần tử khớp với constraint thì thêm vào danh sách tạm
                         filteredList.add(filterList[i])
                     }
@@ -40,6 +37,6 @@ class FilterTheLoai(private var filterList: ArrayList<TheLoaiModel>, private var
 
     // Cập nhật danh sách được lọc trong Adapter và thông báo cho RecyclerView để cập nhật giao diện người dùng
     override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-        adapter.updateList(results?.values as ArrayList<TheLoaiModel>)
+        adapter.updateList(results?.values as ArrayList<TruyenModel>)
     }
 }

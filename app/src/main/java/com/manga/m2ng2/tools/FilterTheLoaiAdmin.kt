@@ -1,9 +1,10 @@
-package com.manga.m2ng2.model
+package com.manga.m2ng2.tools
 
 import android.widget.Filter
 import com.manga.m2ng2.adapter.TheLoaiAdapter
+import com.manga.m2ng2.model.TheLoaiModel
 
-class FilterTheLoai(private var filterList: ArrayList<TheLoaiModel>, private var adapter: TheLoaiAdapter) :
+class FilterTheLoaiAdmin(private var filterList: ArrayList<TheLoaiModel>, private var adapter: TheLoaiAdapter) :
     Filter() {
 
 

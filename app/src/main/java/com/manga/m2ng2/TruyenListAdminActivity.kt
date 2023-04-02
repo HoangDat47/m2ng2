@@ -9,6 +9,7 @@ import com.google.firebase.database.*
 import com.manga.m2ng2.adapter.TruyenAdapter
 import com.manga.m2ng2.databinding.ActivityTruyenListAdminBinding
 import com.manga.m2ng2.model.TruyenModel
+import com.manga.m2ng2.tools.DayConvert
 import com.manga.m2ng2.tools.FilterTruyenAdmin
 
 class TruyenListAdminActivity : AppCompatActivity() {
@@ -60,6 +61,19 @@ class TruyenListAdminActivity : AppCompatActivity() {
                 }
                 adapter = TruyenAdapter(ds1)
                 binding.rvTruyen.adapter = adapter
+
+                //lang nghe su kien click item recyclerview
+                adapter.setOnItemClickListener(object : TruyenAdapter.OnItemClickListener {
+                    override fun onItemClick(position: Int) {
+                        val intent = intent
+                        intent.setClass(this@TruyenListAdminActivity, TruyenDetailActivity::class.java)
+                        intent.putExtra("truyenid", ds1[position].id)
+                        intent.putExtra("truyentitle", ds1[position].title)
+                        intent.putExtra("truyenDate", ds1[position].timestamp?.let { DayConvert().formatNgayGio(it) })
+                        intent.putExtra("truyendesc", ds1[position].desc)
+                        startActivity(intent)
+                    }
+                })
             }
 
             override fun onCancelled(error: DatabaseError) {

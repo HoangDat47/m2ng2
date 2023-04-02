@@ -53,7 +53,7 @@ class TrangAdminActivity : AppCompatActivity() {
             startActivity(Intent(this, ThemTheLoaiActivity::class.java))
         }
         binding.addPdfTab.setOnClickListener {
-            startActivity(Intent(this, ThemPDFActivity::class.java))
+            startActivity(Intent(this, ThemTruyenActivity::class.java))
         }
     }
 

@@ -20,6 +20,15 @@
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             tools:targetApi="31">
         <activity
+                android:name=".ThemTruyenActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".TruyenDetailActivity"
+                android:exported="false"/>
+        <activity
+                android:name=".EditActivity"
+                android:exported="false"/>
+        <activity
                 android:name=".TruyenListAdminActivity"
                 android:exported="false"/>
         <activity

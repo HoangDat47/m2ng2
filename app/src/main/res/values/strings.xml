@@ -20,4 +20,12 @@
     <string name="th_m_truy_n">Thêm truyện</string>
     <string name="example_title">Example Title</string>
     <string name="example_date">Example Date</string>
+    <string name="example_desc">lorem lorem lorem lorem lorem lorem lorem
+        lorem lorem lorem lorem lorem lorem lorem
+        lorem
+    </string>
+    <string name="s_a_truy_n">Sửa truyện</string>
+    <string name="s_a">Sửa</string>
+    <string name="them_chapter">Thêm chapter</string>
+    <string name="t_n_chapter">Tên chapter</string>
 </resources>

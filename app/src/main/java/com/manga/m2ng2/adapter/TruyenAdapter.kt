@@ -1,5 +1,6 @@
 package com.manga.m2ng2.adapter
 
+import android.R
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,16 +11,30 @@ import com.manga.m2ng2.tools.DayConvert
 
 class TruyenAdapter (private var ds1: ArrayList<TruyenModel>)
     : RecyclerView.Adapter<TruyenAdapter.truyenViewHolder>() {
+        //lang nghe su kien click item recyclerview
+    private var listener: OnItemClickListener? = null
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
     @SuppressLint("NotifyDataSetChanged")
     fun updateList(filtered: ArrayList<TruyenModel>) {
         ds1 = filtered
         notifyDataSetChanged()
     }
-    class truyenViewHolder(val binding: LayoutTruyenBinding) : RecyclerView.ViewHolder(binding.root)
+    class truyenViewHolder(val binding: LayoutTruyenBinding, listener: OnItemClickListener) : RecyclerView.ViewHolder(binding.root){
+        init {
+            binding.root.setOnClickListener {
+                listener?.onItemClick(adapterPosition)
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): truyenViewHolder {
         val binding = LayoutTruyenBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return truyenViewHolder(binding)
+        return truyenViewHolder(binding, listener!!)
     }
 
     override fun onBindViewHolder(holder: truyenViewHolder, position: Int) {

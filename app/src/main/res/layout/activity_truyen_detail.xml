@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/wall_paper"
+              android:orientation="vertical"
+              tools:context=".TruyenDetailActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:orientation="horizontal">
+
+        <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/todo"
+                android:scaleType="fitCenter"
+                android:src="@drawable/player" />
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="start|center_vertical"
+                android:orientation="vertical"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp">
+
+            <TextView
+                    android:id="@+id/tv_tenTruyen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/example_title"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/example_date"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            <TextView
+                    android:id="@+id/tv_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/example_desc"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/tv_chapterTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:text="Chapter"
+            android:textColor="@color/black"
+            android:textSize="16sp" tools:ignore="HardcodedText"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_listChapter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/border"
+            tools:listitem="@layout/layout_chapter"
+            android:orientation="vertical" />
+    <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:padding="10dp">
+
+        <Button
+                android:id="@+id/btn_themChapter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/them_chapter"
+                android:background="@drawable/shape_btn01"/>
+
+        <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_pdfTab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:backgroundTint="@color/purple_500"
+                app:fabCustomSize="50dp"
+                app:tint="@color/white"
+                android:src="@drawable/baseline_picture_as_pdf_24" android:contentDescription="@string/todo"/>-->
+    </LinearLayout>
+</LinearLayout>

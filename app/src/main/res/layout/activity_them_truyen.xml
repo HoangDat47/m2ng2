@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/wall_paper"
-        tools:context=".ThemPDFActivity">
+        tools:context=".ThemTruyenActivity">
     <ImageButton android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:src="@drawable/baseline_attach_file_24"

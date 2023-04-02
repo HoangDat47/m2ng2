@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="@string/s_a_truy_n"
+            android:textSize="30sp"/>
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false">
+        <EditText
+                android:id="@+id/editTruyenName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/shape_edt01"
+                android:padding="10dp"
+                android:minHeight="48dp"
+                android:drawableStart="@drawable/baseline_category_24"
+                android:textColorHint="@color/gray01"
+                android:drawablePadding="10dp"
+                android:hint="@string/t_n_truy_n"
+                android:inputType="textPersonName"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_descriptionEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false">
+        <EditText
+                android:id="@+id/editTruyenDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/shape_edt01"
+                android:padding="10dp"
+                android:minHeight="48dp"
+                android:drawableStart="@drawable/baseline_category_24"
+                android:textColorHint="@color/gray01"
+                android:drawablePadding="10dp"
+                android:hint="@string/truy_n_description"
+                android:inputType="textPersonName"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <!--Pick the loai from theloai-->
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/shape_edt01"
+              android:layout_marginTop="15dp"
+              android:minHeight="48dp"
+              android:drawablePadding="10dp"
+              android:padding="10dp"
+              android:textColorHint="@color/gray01"
+              android:textSize="16sp"
+              android:hint="@string/th_lo_i_truy_n"
+              android:gravity="center_vertical"
+              app:drawableStartCompat="@drawable/baseline_category_24"
+              app:drawableEndCompat="@drawable/baseline_keyboard_arrow_down_24" android:id="@+id/theLoaiTV"/>
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/s_a"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_btn01" android:id="@+id/btn_suaTruyen"/>
+</LinearLayout>

@@ -4,24 +4,18 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.FileProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.manga.m2ng2.databinding.ActivityThemPdfactivityBinding
+import com.manga.m2ng2.databinding.ActivityThemTruyenBinding
 import com.manga.m2ng2.model.TheLoaiModel
-import java.io.File
 
-class ThemPDFActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityThemPdfactivityBinding
+class ThemTruyenActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityThemTruyenBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
     private lateinit var ds: ArrayList<TheLoaiModel>
@@ -38,7 +32,7 @@ class ThemPDFActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityThemPdfactivityBinding.inflate(layoutInflater)
+        binding = ActivityThemTruyenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //init firebase auth

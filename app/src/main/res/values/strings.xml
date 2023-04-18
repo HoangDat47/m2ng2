@@ -28,4 +28,6 @@
     <string name="s_a">Sửa</string>
     <string name="them_chapter">Thêm chapter</string>
     <string name="t_n_chapter">Tên chapter</string>
+    <string name="chapter_1">Chapter 1</string>
+    <string name="n_n">N/N</string>
 </resources>

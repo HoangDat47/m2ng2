@@ -67,6 +67,17 @@ class TruyenDetailActivity : AppCompatActivity() {
                 }
                 adapter = ChapterAdapter(ds2)
                 binding.rvListChapter.adapter = adapter
+
+                //lang nghe su kien click item recyclerview
+                adapter.setOnItemClickListener(object : ChapterAdapter.OnItemClickListener {
+                    override fun onItemClick(position: Int) {
+                        val intent = Intent(this@TruyenDetailActivity, ChapterViewActivity::class.java)
+                        intent.putExtra("chapterid", ds2[position].id)
+                        intent.putExtra("truyenid", ds2[position].truyenId)
+                        intent.putExtra("chaptertitle", ds2[position].title)
+                        startActivity(intent)
+                    }
+                })
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -158,7 +169,7 @@ class TruyenDetailActivity : AppCompatActivity() {
             } .addOnFailureListener {
                 Log.d(TAG, "onFailure: PDF KHÔNG ĐƯỢC UPLOAD TO DB")
                 Toast.makeText(this, "Thêm chapter thất bại", Toast.LENGTH_SHORT).show()
-        }
+            }
     }
     private fun setValues() {
         binding.tvTenTruyen.text = intent.getStringExtra("truyentitle")
@@ -172,3 +183,4 @@ class TruyenDetailActivity : AppCompatActivity() {
         }
     }
 }
+

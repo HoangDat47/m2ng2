@@ -8,11 +8,25 @@ import com.manga.m2ng2.model.ChapterModel
 
 class ChapterAdapter (private var ds2: ArrayList<ChapterModel>)
     : RecyclerView.Adapter<ChapterAdapter.chapterViewHolder>(){
-    class chapterViewHolder(val binding: LayoutChapterBinding) : RecyclerView.ViewHolder(binding.root)
+    //lang nghe su kien click item recyclerview
+    private var listener: ChapterAdapter.OnItemClickListener? = null
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+    fun setOnItemClickListener(listener: ChapterAdapter.OnItemClickListener) {
+        this.listener = listener
+    }
+    class chapterViewHolder(val binding: LayoutChapterBinding, listener: OnItemClickListener) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                listener?.onItemClick(adapterPosition)
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): chapterViewHolder {
         val binding = LayoutChapterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return chapterViewHolder(binding)
+        return chapterViewHolder(binding, listener!!)
     }
 
     override fun onBindViewHolder(holder: chapterViewHolder, position: Int) {

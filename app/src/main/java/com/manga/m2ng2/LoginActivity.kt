@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.manga.m2ng2.databinding.ActivityLoginBinding
+import com.manga.m2ng2.tools.Constrains
 
 class LoginActivity : AppCompatActivity() {
     private var email = ""
@@ -69,13 +70,9 @@ class LoginActivity : AppCompatActivity() {
         //check db
         var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
         databaseReference.child(user!!.uid).get().addOnSuccessListener {
-            if (it.child("userType").value.toString() == "admin") {
-                val intent = Intent(this, TrangAdminActivity::class.java)
-                startActivity(intent)
-            } else {
-                val intent = Intent(this, TrangChuActivity::class.java)
-                startActivity(intent)
-            }
+            Constrains.userRole = it.child("userType").value.toString()
+            val intent = Intent(this, TrangAdminActivity::class.java)
+            startActivity(intent)
         }
     }
 }

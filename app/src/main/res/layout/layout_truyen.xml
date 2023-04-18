@@ -53,14 +53,6 @@
                         android:textColor="@color/gray01"
                         android:textSize="12sp"/>
             </LinearLayout>
-            <ImageButton
-                    android:id="@+id/more_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_edit_24"
-                    android:background="@android:color/transparent"
-                    android:padding="5dp"
-                    android:contentDescription="@string/todo" android:minWidth="48dp" android:minHeight="48dp"/>
         </LinearLayout>
 
     </LinearLayout>

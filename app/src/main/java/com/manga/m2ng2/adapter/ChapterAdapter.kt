@@ -8,6 +8,9 @@ import com.manga.m2ng2.model.ChapterModel
 
 class ChapterAdapter (private var ds2: ArrayList<ChapterModel>)
     : RecyclerView.Adapter<ChapterAdapter.chapterViewHolder>(){
+        init {
+            ds2.sortByDescending { it.title }
+        }
     //lang nghe su kien click item recyclerview
     private var listener: ChapterAdapter.OnItemClickListener? = null
     interface OnItemClickListener {

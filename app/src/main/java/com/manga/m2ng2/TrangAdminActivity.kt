@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -13,6 +15,7 @@ import com.manga.m2ng2.adapter.TheLoaiAdapter
 import com.manga.m2ng2.databinding.ActivityTrangAdminBinding
 import com.manga.m2ng2.tools.FilterTheLoaiAdmin
 import com.manga.m2ng2.model.TheLoaiModel
+import com.manga.m2ng2.tools.Constrains
 
 class TrangAdminActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTrangAdminBinding
@@ -28,7 +31,6 @@ class TrangAdminActivity : AppCompatActivity() {
         //init firebase auth
         auth = FirebaseAuth.getInstance()
         checkUser()
-        loadTheLoai()
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // Do nothing
@@ -89,6 +91,16 @@ class TrangAdminActivity : AppCompatActivity() {
             //user is already logged in
             val email = firebaseUser.email
             Toast.makeText(this, "Đăng nhập bằng $email", Toast.LENGTH_SHORT).show()
+            var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
+            databaseReference.child(firebaseUser!!.uid).get().addOnSuccessListener {
+                Constrains.userRole = it.child("userType").value.toString()
+                if (it.child("userType").value.toString() == "admin") {
+                    binding.linearLayout.setVisibility(View.VISIBLE);
+                } else {
+                    binding.linearLayout.setVisibility(View.GONE);
+                }
+                loadTheLoai()
+            }
         } else {
             //user not logged in, go to main activity
             startActivity(Intent(this, MainActivity::class.java))

@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
         }
         binding.btnSkipLogin.setOnClickListener {
-            startActivity(Intent(this, TrangChuActivity::class.java))
+            startActivity(Intent(this, TrangAdminActivity::class.java))
         }
     }
 }

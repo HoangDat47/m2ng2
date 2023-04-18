@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.manga.m2ng2.tools.Constrains
 import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
@@ -33,13 +34,9 @@ class SplashActivity : AppCompatActivity() {
             //check db
             var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
             databaseReference.child(user!!.uid).get().addOnSuccessListener {
-                if (it.child("userType").value.toString() == "admin") {
-                    val intent = Intent(this, TrangAdminActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    val intent = Intent(this, TrangChuActivity::class.java)
-                    startActivity(intent)
-                }
+                Constrains.userRole = it.child("userType").value.toString()
+                val intent = Intent(this, TrangAdminActivity::class.java)
+                startActivity(intent)
             }
         } else {
             //user not logged in, go to main activity

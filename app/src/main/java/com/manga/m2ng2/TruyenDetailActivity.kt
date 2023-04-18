@@ -19,6 +19,7 @@ import com.google.firebase.storage.StorageReference
 import com.manga.m2ng2.adapter.ChapterAdapter
 import com.manga.m2ng2.databinding.ActivityTruyenDetailBinding
 import com.manga.m2ng2.model.ChapterModel
+import com.manga.m2ng2.tools.Constrains
 import com.squareup.picasso.Picasso
 
 class TruyenDetailActivity : AppCompatActivity() {
@@ -44,11 +45,15 @@ class TruyenDetailActivity : AppCompatActivity() {
             truyenid = it.getString("truyenid")
         }
         loadChapterList()
-        binding.btnThemChapter.setOnClickListener {
-            openThemChapterDialog(
-                truyenid.toString(),
-                intent.getStringExtra("truyentitle").toString()
-            )
+        if (Constrains.userRole == "admin") {
+            binding.btnThemChapter.setOnClickListener {
+                openThemChapterDialog(
+                    truyenid.toString(),
+                    intent.getStringExtra("truyentitle").toString()
+                )
+            }
+        } else {
+            binding.btnThemChapter.visibility = View.GONE
         }
     }
 
@@ -153,7 +158,6 @@ class TruyenDetailActivity : AppCompatActivity() {
     private fun uploadPDFToDb(downloadUri: Uri?, timestamp: Long, tenchapter: String) {
         Log.d(TAG, "uploadPDFToDb: BẮT ĐẦU UPLOAD PDF TO DB")
         var uid = auth.uid
-//        var truyenid = intent.getStringExtra("truyenid").toString()
         hashMap["uid"] = uid.toString()
         hashMap["id"] = timeString
         hashMap["title"] = tenchapter

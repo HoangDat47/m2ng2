@@ -38,7 +38,6 @@ class TruyenAdapter (private var ds1: ArrayList<TruyenModel>)
     }
 
     override fun onBindViewHolder(holder: truyenViewHolder, position: Int) {
-        val id = ds1[position].id
         val tenTruyen = ds1[position].title
         val timestamp = ds1[position].timestamp
         val timeFormat = DayConvert().formatTimeStamp(timestamp!!)

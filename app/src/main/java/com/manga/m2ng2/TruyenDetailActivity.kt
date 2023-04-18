@@ -11,9 +11,9 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.manga.m2ng2.adapter.ChapterAdapter
@@ -23,6 +23,7 @@ import com.manga.m2ng2.tools.DayConvert
 
 class TruyenDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTruyenDetailBinding
+    private lateinit var ds2: ArrayList<ChapterModel>
     private lateinit var adapter: ChapterAdapter
     private lateinit var dbRef: DatabaseReference
     private lateinit var storageReference: StorageReference
@@ -30,6 +31,7 @@ class TruyenDetailActivity : AppCompatActivity() {
     private var hashMap: HashMap<String, Any> = HashMap()
     private var timestamp = System.currentTimeMillis()
     private var timeString = timestamp.toString()
+    private var truyenid: String? = null
     private var tenchapter = ""
     private var pdfUri: Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,12 +40,39 @@ class TruyenDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
         setValues()
+        intent.extras?.let {
+            truyenid = it.getString("truyenid")
+        }
+        loadChapterList()
         binding.btnThemChapter.setOnClickListener {
             openThemChapterDialog(
-                intent.getStringExtra("truyenid").toString(),
+                truyenid.toString(),
                 intent.getStringExtra("truyentitle").toString()
             )
         }
+    }
+
+    private fun loadChapterList() {
+        binding.rvListChapter.layoutManager = LinearLayoutManager(this)
+        ds2 = arrayListOf<ChapterModel>()
+        dbRef = FirebaseDatabase.getInstance().getReference("Chapter/$truyenid")
+        dbRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                ds2.clear()
+                for (data in snapshot.children) {
+                    val chapter = data.getValue(ChapterModel::class.java)
+                    if (chapter?.truyenId == truyenid) {
+                        ds2.add(chapter!!)
+                    }
+                }
+                adapter = ChapterAdapter(ds2)
+                binding.rvListChapter.adapter = adapter
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@TruyenDetailActivity, error.message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun openThemChapterDialog(truyenid: String, truyentitle: String) {
@@ -113,11 +142,11 @@ class TruyenDetailActivity : AppCompatActivity() {
     private fun uploadPDFToDb(downloadUri: Uri?, timestamp: Long, tenchapter: String) {
         Log.d(TAG, "uploadPDFToDb: BẮT ĐẦU UPLOAD PDF TO DB")
         var uid = auth.uid
-        var truyenid = intent.getStringExtra("truyenid").toString()
+//        var truyenid = intent.getStringExtra("truyenid").toString()
         hashMap["uid"] = uid.toString()
         hashMap["id"] = timeString
         hashMap["title"] = tenchapter
-        hashMap["truyenId"] = truyenid
+        hashMap["truyenId"] = this.truyenid.toString()
         hashMap["pdfUrl"] = downloadUri.toString()
         hashMap["timestamp"] = timestamp
         //db>Chapter>truyenId>timeString

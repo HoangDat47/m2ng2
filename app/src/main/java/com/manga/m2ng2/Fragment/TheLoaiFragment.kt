@@ -15,6 +15,7 @@ import com.manga.m2ng2.R
 import com.manga.m2ng2.adapter.TheLoaiAdapter
 import com.manga.m2ng2.databinding.FragmentTheLoaiBinding
 import com.manga.m2ng2.model.TheLoaiModel
+import com.manga.m2ng2.tools.Constrains
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,13 +42,19 @@ class TheLoaiFragment : Fragment(R.layout.fragment_the_loai) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnThemTheLoai.setOnClickListener {
-            startActivity(Intent(requireContext(), ThemTheLoaiActivity::class.java))
-        }
-        binding.themTruyen.setOnClickListener {
-            startActivity(Intent(requireContext(), ThemTruyenActivity::class.java))
-        }
         loadTheLoai()
+        if (Constrains.userRole == "admin") {
+            binding.linearLayout.setOnClickListener {
+                binding.btnThemTheLoai.setOnClickListener {
+                    startActivity(Intent(requireContext(), ThemTheLoaiActivity::class.java))
+                }
+                binding.themTruyen.setOnClickListener {
+                    startActivity(Intent(requireContext(), ThemTruyenActivity::class.java))
+                }
+            }
+        } else {
+            binding.linearLayout.visibility = View.GONE
+        }
     }
 
     private fun loadTheLoai() {

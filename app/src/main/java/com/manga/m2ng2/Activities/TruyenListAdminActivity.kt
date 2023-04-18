@@ -9,7 +9,7 @@ import com.google.firebase.database.*
 import com.manga.m2ng2.adapter.TruyenAdapter
 import com.manga.m2ng2.databinding.ActivityTruyenListAdminBinding
 import com.manga.m2ng2.model.TruyenModel
-import com.manga.m2ng2.tools.DayConvert
+import com.manga.m2ng2.tools.Helper
 import com.manga.m2ng2.tools.FilterTruyenAdmin
 
 class TruyenListAdminActivity : AppCompatActivity() {
@@ -69,7 +69,7 @@ class TruyenListAdminActivity : AppCompatActivity() {
                         intent.setClass(this@TruyenListAdminActivity, TruyenDetailActivity::class.java)
                         intent.putExtra("truyenid", ds1[position].id)
                         intent.putExtra("truyentitle", ds1[position].title)
-                        intent.putExtra("truyenDate", ds1[position].timestamp?.let { DayConvert().formatNgayGio(it) })
+                        intent.putExtra("truyenDate", ds1[position].timestamp?.let { Helper().formatNgayGio(it) })
                         intent.putExtra("truyendesc", ds1[position].desc)
                         intent.putExtra("imageUrl", ds1[position].imageUrl)
                         startActivity(intent)

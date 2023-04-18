@@ -22,7 +22,6 @@ import com.manga.m2ng2.tools.Constrains
 class TrangAdminActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTrangAdminBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var dbRef: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTrangAdminBinding.inflate(layoutInflater)

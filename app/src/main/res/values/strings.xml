@@ -32,4 +32,6 @@
     <string name="n_n">N/N</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="truy_n">Truyện</string>
+    <string name="theo_d_i">Theo dõi</string>
 </resources>

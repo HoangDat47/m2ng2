@@ -1,8 +1,11 @@
 package com.manga.m2ng2.Activities
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +14,8 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -21,6 +26,7 @@ import com.manga.m2ng2.adapter.ChapterAdapter
 import com.manga.m2ng2.databinding.ActivityTruyenDetailBinding
 import com.manga.m2ng2.model.ChapterModel
 import com.manga.m2ng2.tools.Constrains
+import com.manga.m2ng2.tools.Helper
 import com.squareup.picasso.Picasso
 
 class TruyenDetailActivity : AppCompatActivity() {
@@ -36,11 +42,17 @@ class TruyenDetailActivity : AppCompatActivity() {
     private var truyenid: String? = null
     private var tenchapter = ""
     private var pdfUri: Uri? = null
+    private var isInMyFav = false
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTruyenDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
+        val firebaseUser = auth.currentUser
+        if(firebaseUser != null) {
+            kiemTraTheoDoi()
+        }
         setValues()
         intent.extras?.let {
             truyenid = it.getString("truyenid")
@@ -56,6 +68,46 @@ class TruyenDetailActivity : AppCompatActivity() {
         } else {
             binding.btnThemChapter.visibility = View.GONE
         }
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+        binding.btnTheoDoi.setOnClickListener {
+            if (firebaseUser == null) {
+                Toast.makeText(this, "Bạn cần đăng nhập để theo dõi truyện", Toast.LENGTH_SHORT).show()
+            } else {
+                if(isInMyFav) {
+                    //remove from fav
+                    Helper().huyTheoDoiTruyen(this, truyenid!!)
+                } else {
+                    //add to fav
+                    Helper().theoDoiTruyen(this, truyenid!!)
+                }
+            }
+        }
+    }
+
+    private fun kiemTraTheoDoi() {
+        dbRef = FirebaseDatabase.getInstance().getReference("Users")
+        dbRef.child(auth.currentUser!!.uid).child("TheoDoi").addValueEventListener(object : ValueEventListener {
+            @SuppressLint("SetTextI18n")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                isInMyFav = snapshot.child(truyenid!!).exists()
+                if (isInMyFav) {
+                    binding.btnTheoDoi.text = "Huỷ Theo Dõi"
+                    binding.btnTheoDoi.setTextColor(Color.parseColor("#FFFFFF"))
+                    binding.btnTheoDoi.setBackgroundColor(Color.parseColor("#FF0000"))
+                    binding.btnTheoDoi.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_heart_broken_24, 0, 0, 0)
+                } else {
+                    binding.btnTheoDoi.text = "Theo Dõi"
+                    binding.btnTheoDoi.setBackgroundColor(Color.parseColor("#8BC34A"))
+                    binding.btnTheoDoi.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_favorite_24, 0, 0, 0)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@TruyenDetailActivity, error.message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun loadChapterList() {
@@ -171,16 +223,17 @@ class TruyenDetailActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 Log.d(TAG, "onSuccess: PDF ĐÃ ĐƯỢC UPLOAD TO DB")
                 Toast.makeText(this, "Thêm chapter thành công", Toast.LENGTH_SHORT).show()
-            } .addOnFailureListener {
+            }.addOnFailureListener {
                 Log.d(TAG, "onFailure: PDF KHÔNG ĐƯỢC UPLOAD TO DB")
                 Toast.makeText(this, "Thêm chapter thất bại", Toast.LENGTH_SHORT).show()
             }
     }
+
     private fun setValues() {
         binding.tvTenTruyen.text = intent.getStringExtra("truyentitle")
         binding.tvDate.text = intent.getStringExtra("truyenDate")
         binding.tvDesc.text = intent.getStringExtra("truyendesc")
-        if(intent.getStringExtra("imageUrl") != null){
+        if (intent.getStringExtra("imageUrl") != null) {
             Picasso.get().load(intent.getStringExtra("imageUrl")).into(binding.imgTruyen)
         } else {
             Log.e("TruyenDetailActivity", "setValues: imageUrl is null")

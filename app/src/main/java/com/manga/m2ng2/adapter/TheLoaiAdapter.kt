@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.manga.m2ng2.TruyenListAdminActivity
 import com.manga.m2ng2.databinding.LayoutTheloaiBinding
 import com.manga.m2ng2.model.TheLoaiModel
@@ -36,20 +39,42 @@ class TheLoaiAdapter(private var ds: ArrayList<TheLoaiModel>) :
         //set data
         holder.binding.tvTheLoai.text = theLoai.theLoai
         holder.btn_deleteTheLoai.setOnClickListener {
-            //delete theloai
-            AlertDialog.Builder(holder.itemView.context)
-                .setTitle("Xóa thể loại")
-                .setMessage("Bạn có muốn xóa thể loại này không?")
-                .setPositiveButton("Có") { dialog, which ->
-                    val dbRef = FirebaseDatabase.getInstance().getReference("TheLoai")
-                    dbRef.child(id!!).removeValue()
-                    Toast.makeText(holder.itemView.context, "Đã xóa thể loại", Toast.LENGTH_SHORT).show()
+            // Truy vấn vào Firebase để lấy danh sách truyện có chứa thể loại đó
+            val truyenRef = FirebaseDatabase.getInstance().getReference("Truyen")
+            val query = truyenRef.orderByChild("theLoaiId").equalTo(id)
+            query.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    // Kiểm tra xem danh sách truyện có rỗng hay không
+                    if (snapshot.exists() && snapshot.childrenCount > 0) {
+                        // Nếu danh sách truyện không rỗng, hiển thị cảnh báo cho người dùng biết
+                        val builder = AlertDialog.Builder(holder.itemView.context)
+                        builder.setTitle("Xóa thể loại")
+                        builder.setMessage("Thể loại này đang có ${snapshot.childrenCount} truyện. Bạn không thể xóa thể loại này!")
+                        builder.setPositiveButton("OK") { _, _ -> }
+                        builder.show()
+                    } else {
+                        // Nếu danh sách truyện rỗng, thực hiện hiện lựa chọn có không rồi mới xóa
+                        val builder = AlertDialog.Builder(holder.itemView.context)
+                        builder.setTitle("Xóa thể loại")
+                        builder.setMessage("Bạn có chắc chắn muốn xóa?")
+                        builder.setPositiveButton("Có") { _, _ ->
+                            // Nếu người dùng đồng ý xóa thể loại, thực hiện xóa
+                            val dbRef = FirebaseDatabase.getInstance().getReference("TheLoai")
+                            dbRef.child(id!!).removeValue()
+                            Toast.makeText(holder.itemView.context, "Đã xóa thể loại", Toast.LENGTH_SHORT).show()
+                        }
+                        builder.setNegativeButton("Không") { _, _ -> }
+                        builder.show()
+                    }
                 }
-                .setNegativeButton("Không") { dialog, which ->
-                    dialog.dismiss()
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Xử lý khi truy vấn không thành công
+                    Toast.makeText(holder.itemView.context, "Lỗi: " + error.message, Toast.LENGTH_SHORT).show()
                 }
-                .show()
+            })
         }
+
         //item click go to TruyenListAdminActivity
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, TruyenListAdminActivity::class.java)

@@ -22,8 +22,8 @@
                   android:layout_weight="1"
                   android:textSize="20sp"
                   android:textColor="@color/black"/>
-        <ImageButton android:layout_width="40dp"
-                     android:layout_height="40dp"
+        <ImageButton android:layout_width="48dp"
+                     android:layout_height="48dp"
                      android:id="@+id/btn_deleteTheLoai"
                      android:src="@drawable/baseline_delete_outline_24"
                      android:background="@drawable/shape_btn03"

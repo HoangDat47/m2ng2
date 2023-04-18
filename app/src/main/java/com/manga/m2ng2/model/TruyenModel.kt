@@ -7,6 +7,6 @@ class TruyenModel (
     var theLoaiId: String? = null,
     var timestamp: Long? = null,
     var uid: String? = null,
-    var pdfUrl: String? = null
+    var imageUrl: String? = null
 ) {
 }

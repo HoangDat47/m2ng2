@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.manga.m2ng2.databinding.LayoutTruyenBinding
 import com.manga.m2ng2.model.TruyenModel
 import com.manga.m2ng2.tools.DayConvert
+import com.squareup.picasso.Picasso
 
 class TruyenAdapter (private var ds1: ArrayList<TruyenModel>)
     : RecyclerView.Adapter<TruyenAdapter.truyenViewHolder>() {
@@ -41,6 +42,12 @@ class TruyenAdapter (private var ds1: ArrayList<TruyenModel>)
         val tenTruyen = ds1[position].title
         val timestamp = ds1[position].timestamp
         val timeFormat = DayConvert().formatTimeStamp(timestamp!!)
+        val imageUrl = ds1[position].imageUrl
+        if(imageUrl != null) {
+            Picasso.get().load(imageUrl).placeholder(R.drawable.ic_menu_gallery).into(holder.binding.imgTruyen)
+        } else {
+            Picasso.get().load(R.drawable.ic_menu_gallery).into(holder.binding.imgTruyen)
+        }
         holder.binding.tvTenTruyen.text = tenTruyen
         holder.binding.tvNgayDang.text = timeFormat
     }

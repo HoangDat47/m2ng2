@@ -20,9 +20,9 @@ class ThemTruyenActivity : AppCompatActivity() {
     private lateinit var dbRef: DatabaseReference
     private lateinit var ds: ArrayList<TheLoaiModel>
     private lateinit var storageReference: StorageReference
-    private val TAG = "ThemPDFActivity"
+    private val TAG = "ThemANHActivity"
     private var hashMap: HashMap<String, Any> = HashMap()
-    private var pdfUri: Uri? = null
+    private var anhUri: Uri? = null
     private var selectedTheLoaiId: String? = null
     private var timestamp = System.currentTimeMillis()
     private var timeString = timestamp.toString()
@@ -40,7 +40,7 @@ class ThemTruyenActivity : AppCompatActivity() {
         loadTheLoai()
 
         binding.attachBtn.setOnClickListener {
-            chonPDF()
+            chonAnh()
         }
         binding.theLoaiTV.setOnClickListener {
             theLoaiPickDialog()
@@ -65,44 +65,44 @@ class ThemTruyenActivity : AppCompatActivity() {
         } else if(theLoai.isEmpty()){
             binding.theLoaiTV.error = "Thể loại không được để trống"
             return
-        } else if(pdfUri == null){
-            Toast.makeText(this, "Vui lòng chọn file PDF", Toast.LENGTH_SHORT).show()
+        } else if(anhUri == null){
+            Toast.makeText(this, "Vui lòng chọn file ẢNH", Toast.LENGTH_SHORT).show()
             return
         } else {
-            uploadPDF()
+            uploadAnh()
         }
     }
 
-    private fun uploadPDF() {
-        Log.d(TAG, "uploadPDF: BẮT ĐẦU UPLOAD PDF")
-        var filePathAndName = "Truyens/$timestamp"
+    private fun uploadAnh() {
+        Log.d(TAG, "uploadAnh: BẮT ĐẦU UPLOAD ẢNH")
+        var filePathAndName = "Truyen/$timestamp"
         storageReference = FirebaseStorage.getInstance().getReference(filePathAndName)
-        storageReference.putFile(pdfUri!!).addOnSuccessListener {
-            Log.d(TAG, "onSuccess: PDF ĐÃ ĐƯỢC UPLOAD")
+        storageReference.putFile(anhUri!!).addOnSuccessListener {
+            Log.d(TAG, "onSuccess: ẢNH ĐÃ ĐƯỢC UPLOAD")
             val uriTask = it.storage.downloadUrl
             while (!uriTask.isSuccessful);
             val downloadUri = uriTask.result
-            uploadPDFToDb(downloadUri, timestamp)
+            uploadAnhToDb(downloadUri, timestamp)
         }
     }
 
-    private fun uploadPDFToDb(downloadUri: Uri?, timestamp: Long) {
-        Log.d(TAG, "uploadPDFToDb: BẮT ĐẦU UPLOAD PDF TO DB")
+    private fun uploadAnhToDb(downloadUri: Uri?, timestamp: Long) {
+        Log.d(TAG, "uploadAnhToDb: BẮT ĐẦU UPLOAD ẢNH VÀO DB")
         var uid = auth.uid
         hashMap["uid"] = uid.toString()
         hashMap["id"] = timeString
         hashMap["title"] = title
         hashMap["desc"] = desc
         hashMap["theLoaiId"] = selectedTheLoaiId!! // Sử dụng giá trị của selectedTheLoaiId
-        hashMap["pdfUrl"] = downloadUri.toString()
+        hashMap["imageUrl"] = downloadUri.toString()
         hashMap["timestamp"] = timestamp
 
         //db>truyens
-        dbRef = FirebaseDatabase.getInstance().getReference("truyens")
+        dbRef = FirebaseDatabase.getInstance().getReference("Truyen")
         dbRef.child(timestamp.toString()).setValue(hashMap)
             .addOnSuccessListener {
-                Log.d(TAG, "onSuccess: PDF ĐÃ ĐƯỢC UPLOAD TO DB")
-                Toast.makeText(this, "PDF ĐÃ ĐƯỢC UPLOAD", Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "onSuccess: Ảnh ĐÃ ĐƯỢC UPLOAD")
+                Toast.makeText(this, "Ảnh ĐÃ ĐƯỢC UPLOAD", Toast.LENGTH_SHORT).show()
                 finish()
             }
             .addOnFailureListener {
@@ -152,10 +152,10 @@ class ThemTruyenActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun chonPDF() {
-        Log.d(TAG, "chonPDF: BẮT ĐẦU CHỌN PDF")
+    private fun chonAnh() {
+        Log.d(TAG, "chonAnh: BẮT ĐẦU CHỌN ẢNH")
         val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "application/pdf"
+        intent.type = "image/*"
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         startActivityForResult(intent, REQUEST_CODE)
     }
@@ -163,15 +163,15 @@ class ThemTruyenActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            pdfUri = data.data
-            Log.e(TAG, "onActivityResult: $pdfUri")
+            anhUri = data.data
+            Log.e(TAG, "onActivityResult: $anhUri")
         }   else {
-            Toast.makeText(this, "Vui lòng chọn file PDF", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Vui lòng chọn file ảnh", Toast.LENGTH_SHORT).show()
         }
     }
 
     private companion object {
-        const val TAG = "ADD_PDF_TAG"
+        const val TAG = "ADD_ANH_TAG"
         const val REQUEST_CODE = 1000
     }
 }

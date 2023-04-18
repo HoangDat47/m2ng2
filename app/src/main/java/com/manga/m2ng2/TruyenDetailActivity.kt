@@ -19,7 +19,7 @@ import com.google.firebase.storage.StorageReference
 import com.manga.m2ng2.adapter.ChapterAdapter
 import com.manga.m2ng2.databinding.ActivityTruyenDetailBinding
 import com.manga.m2ng2.model.ChapterModel
-import com.manga.m2ng2.tools.DayConvert
+import com.squareup.picasso.Picasso
 
 class TruyenDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTruyenDetailBinding
@@ -164,5 +164,11 @@ class TruyenDetailActivity : AppCompatActivity() {
         binding.tvTenTruyen.text = intent.getStringExtra("truyentitle")
         binding.tvDate.text = intent.getStringExtra("truyenDate")
         binding.tvDesc.text = intent.getStringExtra("truyendesc")
+        if(intent.getStringExtra("imageUrl") != null){
+            Picasso.get().load(intent.getStringExtra("imageUrl")).into(binding.imgTruyen)
+        } else {
+            Log.e("TruyenDetailActivity", "setValues: imageUrl is null")
+            binding.imgTruyen.setImageResource(R.drawable.baseline_more_vert_24)
+        }
     }
 }

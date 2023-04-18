@@ -52,7 +52,7 @@ class TrangAdminActivity : AppCompatActivity() {
         binding.btnThemTheLoai.setOnClickListener {
             startActivity(Intent(this, ThemTheLoaiActivity::class.java))
         }
-        binding.addPdfTab.setOnClickListener {
+        binding.themTruyen.setOnClickListener {
             startActivity(Intent(this, ThemTruyenActivity::class.java))
         }
     }

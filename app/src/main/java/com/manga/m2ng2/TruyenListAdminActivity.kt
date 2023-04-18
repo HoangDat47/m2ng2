@@ -49,7 +49,7 @@ class TruyenListAdminActivity : AppCompatActivity() {
     private fun loadTruyenList() {
         binding.rvTruyen.layoutManager = LinearLayoutManager(this)
         ds1 = arrayListOf<TruyenModel>()
-        dbRef = FirebaseDatabase.getInstance().getReference("truyens")
+        dbRef = FirebaseDatabase.getInstance().getReference("Truyen")
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 ds1.clear()
@@ -71,6 +71,7 @@ class TruyenListAdminActivity : AppCompatActivity() {
                         intent.putExtra("truyentitle", ds1[position].title)
                         intent.putExtra("truyenDate", ds1[position].timestamp?.let { DayConvert().formatNgayGio(it) })
                         intent.putExtra("truyendesc", ds1[position].desc)
+                        intent.putExtra("imageUrl", ds1[position].imageUrl)
                         startActivity(intent)
                     }
                 })

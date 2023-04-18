@@ -1,4 +1,4 @@
-package com.manga.m2ng2
+package com.manga.m2ng2.Activities
 
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.manga.m2ng2.R
 import com.manga.m2ng2.adapter.ChapterAdapter
 import com.manga.m2ng2.databinding.ActivityTruyenDetailBinding
 import com.manga.m2ng2.model.ChapterModel

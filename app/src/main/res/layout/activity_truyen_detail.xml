@@ -6,7 +6,7 @@
               android:layout_height="match_parent"
               android:background="@drawable/wall_paper"
               android:orientation="vertical"
-              tools:context=".TruyenDetailActivity">
+              tools:context=".Activities.TruyenDetailActivity">
 
     <LinearLayout
             android:layout_width="match_parent"

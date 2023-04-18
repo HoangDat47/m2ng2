@@ -11,7 +11,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.manga.m2ng2.TruyenListAdminActivity
+import com.manga.m2ng2.Activities.TruyenListAdminActivity
 import com.manga.m2ng2.databinding.LayoutTheloaiBinding
 import com.manga.m2ng2.model.TheLoaiModel
 import com.manga.m2ng2.tools.Constrains

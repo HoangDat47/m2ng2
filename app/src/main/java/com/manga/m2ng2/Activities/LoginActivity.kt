@@ -1,4 +1,4 @@
-package com.manga.m2ng2
+package com.manga.m2ng2.Activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

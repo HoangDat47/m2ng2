@@ -30,4 +30,6 @@
     <string name="t_n_chapter">Tên chapter</string>
     <string name="chapter_1">Chapter 1</string>
     <string name="n_n">N/N</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -8,7 +8,7 @@
         android:padding="50dp"
         android:orientation="vertical"
         android:background="@drawable/wall_paper"
-        tools:context=".MainActivity">
+        tools:context=".Activities.MainActivity">
     <Button
             android:text="@string/ng_nh_p"
             android:layout_width="match_parent"

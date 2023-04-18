@@ -1,4 +1,4 @@
-package com.manga.m2ng2
+package com.manga.m2ng2.Activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.manga.m2ng2.R
 import com.manga.m2ng2.tools.Constrains
 import kotlinx.coroutines.launch
 

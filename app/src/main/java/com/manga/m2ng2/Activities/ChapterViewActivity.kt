@@ -1,4 +1,4 @@
-package com.manga.m2ng2
+package com.manga.m2ng2.Activities
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity

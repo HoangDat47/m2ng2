@@ -20,6 +20,9 @@
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             tools:targetApi="31">
         <activity
+                android:name=".Activities.ProfileActivity"
+                android:exported="false"/>
+        <activity
                 android:name=".Activities.ChapterViewActivity"
                 android:exported="false"/>
         <activity
@@ -53,8 +56,8 @@
         </activity>
         <activity
                 android:name=".Activities.TrangAdminActivity"
-                android:windowSoftInputMode="adjustPan"
-                android:exported="false">
+                android:exported="false"
+                android:windowSoftInputMode="adjustPan">
             <meta-data
                     android:name="android.app.lib_name"
                     android:value=""/>

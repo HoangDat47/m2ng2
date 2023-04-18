@@ -53,19 +53,9 @@ class TrangAdminActivity : AppCompatActivity() {
             val email = firebaseUser.email
             Toast.makeText(this, "Đăng nhập bằng $email", Toast.LENGTH_SHORT).show()
             var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
-            /*databaseReference.child(firebaseUser!!.uid).get().addOnSuccessListener {
-                Constrains.userRole = it.child("userType").value.toString()
-                if (it.child("userType").value.toString() == "admin") {
-                    binding.linearLayout.setVisibility(View.VISIBLE);
-                } else {
-                    binding.linearLayout.setVisibility(View.GONE);
-                }
-                loadTheLoai()
-            }*/
         } else {
-            //user not logged in, go to main activity
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+            //user not logged in, thông báo vào với vai trò guess
+            Toast.makeText(this, "Vào với vai trò guess", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.manga.m2ng2.Activities.ProfileActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -93,4 +94,5 @@ class Helper : Application() {
                 }
         }
     }
+
 }

@@ -34,4 +34,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="truy_n">Truyện</string>
     <string name="theo_d_i">Theo dõi</string>
+    <string name="profile">Profile</string>
+    <string name="t_n_ng_i_d_ng">Tên người dùng</string>
+    <string name="mail">abc@example.com</string>
+    <string name="n_a">N/A</string>
+    <string name="account">Account</string>
+    <string name="member">Member</string>
+    <string name="truy_n_theo_d_i">Truyện theo dõi</string>
+    <string name="update">Update</string>
 </resources>

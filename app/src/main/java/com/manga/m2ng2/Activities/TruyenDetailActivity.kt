@@ -144,6 +144,7 @@ class TruyenDetailActivity : AppCompatActivity() {
         })
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun openThemChapterDialog(truyenid: String, truyentitle: String) {
         val mDialog = AlertDialog.Builder(this)
         val inflater = layoutInflater
@@ -182,6 +183,7 @@ class TruyenDetailActivity : AppCompatActivity() {
                     val downloadUri = uriTask.result
                     uploadPDFToDb(downloadUri, timestamp, tenchapter)
                 }
+                binding.rvListChapter.adapter?.notifyDataSetChanged()
                 alertDialog.dismiss()
             }
         }

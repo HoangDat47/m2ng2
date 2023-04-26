@@ -59,25 +59,43 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun uploadImage() {
-        if(ImageUri == null) {
+        if (ImageUri == null) {
             Toast.makeText(this, "Chưa chọn ảnh", Toast.LENGTH_SHORT).show()
             uploadProfile("")
         } else {
             Log.d(TAG, "uploadImage: ${ImageUri.toString()}")
-            var filePathAndName = "Profile_Images/" + auth.currentUser?.uid
-            storageReference = FirebaseStorage.getInstance().reference.child(filePathAndName)
-            storageReference.putFile(ImageUri!!).addOnSuccessListener {
-                Log.d(TAG, "uploadImage: ${it.metadata?.reference?.downloadUrl}")
-                var uriTask: Task<Uri> = it.storage.downloadUrl
-                while(!uriTask.isSuccessful);
-                var downloadUrl = uriTask.result
-                Log.d(TAG, "uploadImage: $downloadUrl")
-                uploadProfile(downloadUrl.toString())
-            } .addOnFailureListener {
-                Toast.makeText(this, "Lỗi: ${it.message}", Toast.LENGTH_SHORT).show()
+            val filePathAndName = "Profile_Images/${auth.currentUser?.uid}"
+            val storageReference = FirebaseStorage.getInstance().reference.child(filePathAndName)
+
+            // Delete old profile image
+            storageReference.delete().addOnSuccessListener {
+                // Upload new profile image
+                storageReference.putFile(ImageUri!!).addOnSuccessListener {
+                    Log.d(TAG, "uploadImage: ${it.metadata?.reference?.downloadUrl}")
+                    val uriTask: Task<Uri> = it.storage.downloadUrl
+                    while (!uriTask.isSuccessful);
+                    val downloadUrl = uriTask.result
+                    Log.d(TAG, "uploadImage: $downloadUrl")
+                    uploadProfile(downloadUrl.toString())
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Lỗi: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
+            }.addOnFailureListener {
+                // If there is no old profile image, upload the new one directly
+                storageReference.putFile(ImageUri!!).addOnSuccessListener {
+                    Log.d(TAG, "uploadImage: ${it.metadata?.reference?.downloadUrl}")
+                    val uriTask: Task<Uri> = it.storage.downloadUrl
+                    while (!uriTask.isSuccessful);
+                    val downloadUrl = uriTask.result
+                    Log.d(TAG, "uploadImage: $downloadUrl")
+                    uploadProfile(downloadUrl.toString())
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Lỗi: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
+
 
     private fun uploadProfile(imageUrl: String) {
         if(imageUrl.isEmpty()) {

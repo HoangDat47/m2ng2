@@ -213,5 +213,21 @@
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
             android:background="@color/gray03"
+            android:id="@+id/view"
             android:layout_below="@+id/llInfo"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view"
+            android:text="@string/truy_n_theo_d_i"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:id="@+id/tvTruyenTheoDoi"
+            android:textColor="@color/black"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTruyenTheoDoi"
+        android:layout_below="@+id/tvTruyenTheoDoi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/layout_truyen"/>
 </RelativeLayout>

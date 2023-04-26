@@ -1,5 +1,6 @@
 package com.manga.m2ng2.Activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
@@ -14,23 +15,31 @@ import android.widget.PopupMenu
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.manga.m2ng2.R
+import com.manga.m2ng2.adapter.TruyenAdapter
 import com.manga.m2ng2.databinding.ActivityProfileBinding
+import com.manga.m2ng2.model.TruyenModel
 import com.manga.m2ng2.tools.Helper
+import com.squareup.picasso.Picasso
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
+    private lateinit var userRef: DatabaseReference
     private lateinit var storageReference: StorageReference
+    private lateinit var ds1: ArrayList<TruyenModel>
+    private lateinit var adapter: TruyenAdapter
+    private var truyenId: String? = null
     private var ImageUri: Uri? = null
     private var TAG = "PROFILE_TAG"
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
@@ -38,6 +47,7 @@ class ProfileActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         loadThongTinUser()
+        loadTruyenTheoDoi()
         binding.btnBack.setOnClickListener {
             finish()
         }
@@ -58,10 +68,64 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun loadTruyenTheoDoi() {
+        userRef = FirebaseDatabase.getInstance().getReference("Users/${auth.currentUser?.uid}/TheoDoi")
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                truyenId = snapshot.children.map { it.key }.toString()
+                loadTruyen(truyenId!!)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.d(TAG, "onCancelled: ${error.message}")
+            }
+        })
+    }
+
+    private fun loadTruyen(truyenId: String) {
+        binding.rvTruyenTheoDoi.layoutManager = LinearLayoutManager(this)
+        ds1 = arrayListOf<TruyenModel>()
+        dbRef = FirebaseDatabase.getInstance().getReference("Truyen")
+        dbRef.addValueEventListener(object : ValueEventListener {
+            @SuppressLint("SetTextI18n")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                ds1.clear()
+                for (data in snapshot.children) {
+                    val truyen = data.getValue(TruyenModel::class.java)
+                    if (truyenId.contains(truyen?.id.toString())) {
+                        ds1.add(truyen!!)
+                    }
+                }
+                adapter = TruyenAdapter(ds1)
+                binding.rvTruyenTheoDoi.adapter = adapter
+                //lang nghe su kien click item recyclerview
+                adapter.setOnItemClickListener(object : TruyenAdapter.OnItemClickListener {
+                    override fun onItemClick(position: Int) {
+                        val intent = intent
+                        intent.setClass(this@ProfileActivity, TruyenDetailActivity::class.java)
+                        intent.putExtra("truyenid", ds1[position].id)
+                        intent.putExtra("truyentitle", ds1[position].title)
+                        intent.putExtra("truyenDate", ds1[position].timestamp?.let { Helper().formatNgayGio(it) })
+                        intent.putExtra("truyendesc", ds1[position].desc)
+                        intent.putExtra("imageUrl", ds1[position].imageUrl)
+                        startActivity(intent)
+                    }
+                })
+                //them truyen count size
+                binding.tvTruyenDaTheoDoi.text = "${ds1.size}"
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d(TAG, "onCancelled: ${error.message}")
+            }
+        })
+    }
+
     private fun uploadImage() {
         if (ImageUri == null) {
             Toast.makeText(this, "Chưa chọn ảnh", Toast.LENGTH_SHORT).show()
-            uploadProfile("")
+            binding.btnLuuImage.visibility = View.GONE
+            binding.btnEditProfile.visibility = View.VISIBLE
+            return
         } else {
             Log.d(TAG, "uploadImage: ${ImageUri.toString()}")
             val filePathAndName = "Profile_Images/${auth.currentUser?.uid}"
@@ -96,7 +160,6 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-
     private fun uploadProfile(imageUrl: String) {
         if(imageUrl.isEmpty()) {
             dbRef = FirebaseDatabase.getInstance().getReference("Users")
@@ -107,7 +170,7 @@ class ProfileActivity : AppCompatActivity() {
         } else {
             dbRef = FirebaseDatabase.getInstance().getReference("Users")
             dbRef.child(auth.uid!!).child("profileImage").setValue(imageUrl)
-            Glide.with(this).load(imageUrl).into(binding.imgProfile)
+            Picasso.get().load(imageUrl).into(binding.imgProfile)
             binding.btnLuuImage.visibility = View.GONE
             binding.btnEditProfile.visibility = View.VISIBLE
         }
@@ -206,6 +269,7 @@ class ProfileActivity : AppCompatActivity() {
         binding.btnEditProfile.visibility = View.GONE
         val params = binding.tvMail.layoutParams as RelativeLayout.LayoutParams
         params.addRule(RelativeLayout.BELOW, R.id.edtName)
+        binding.edtName.setText(binding.tvName.text)
     }
 
     private fun loadThongTinUser() {
@@ -227,11 +291,8 @@ class ProfileActivity : AppCompatActivity() {
                 binding.tvMemberSince.text = formatDate
                 binding.tvAccount.text = userType
 
-                //set Image using glide
-                Glide.with(this@ProfileActivity)
-                    .load(profileImage)
-                    .placeholder(R.drawable.baseline_person_24)
-                    .into(binding.imgProfile)
+                //set Image using Picasso
+                Picasso.get().load(profileImage).placeholder(R.drawable.baseline_person_24).into(binding.imgProfile)
             }
 
             override fun onCancelled(error: DatabaseError) {

@@ -1,47 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/wall_paper"
+        android:orientation="vertical"
+        android:background="@color/white"
         tools:context=".Activities.TrangAdminActivity">
-    <!--Toolbar-->
-    <RelativeLayout
-            android:id="@+id/toolbarRL"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:background="@drawable/shape_toolbar">
-        <Button
-                android:text="@string/ng_xu_t"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusableInTouchMode="true"
-                android:layout_alignParentRight="true"
-                android:id="@+id/btn_logOut"/>
 
-    </RelativeLayout>
-    <!--Tab-->
-    <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbarRL"
-            android:layout_margin="5dp"
-            android:background="@android:color/transparent"
-            app:tabBackground="@drawable/tab_selector"
-            app:tabIndicatorFullWidth="false"
-            app:tabIndicatorHeight="0dp"
-            app:tabMode="scrollable"
-            app:tabUnboundedRipple="false"/>
     <!--ViewPager-->
     <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tabLayout"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/gray03"
+            android:id="@+id/view"/>
+    <!--Tab-->
+    <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:backgroundTint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/border"
             android:layout_margin="5dp"
-            android:layout_marginTop="0dp"/>
-
-</RelativeLayout>
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="fixed"
+            app:tabRippleColor="@color/white"
+            app:tabIconSize="@dimen/my_dimension"
+            app:tabTextAppearance="@style/TabLayoutTextAppearance"
+            app:tabUnboundedRipple="false"/>
+</LinearLayout>

@@ -38,32 +38,25 @@ class TheLoaiAdapter(private var ds: ArrayList<TheLoaiModel>) :
         //get data
         val id = ds[position].id
         val theLoai = ds[position]
-        val uid = ds[position].uid
-        val timestamp = ds[position].timestamp
         //set data
         holder.binding.tvTheLoai.text = theLoai.theLoai
         if (Constrains.userRole == "admin") {
             holder.btn_deleteTheLoai.setOnClickListener {
-                // Truy vấn vào Firebase để lấy danh sách truyện có chứa thể loại đó
                 val truyenRef = FirebaseDatabase.getInstance().getReference("Truyen")
                 val query = truyenRef.orderByChild("theLoaiId").equalTo(id)
                 query.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        // Kiểm tra xem danh sách truyện có rỗng hay không
                         if (snapshot.exists() && snapshot.childrenCount > 0) {
-                            // Nếu danh sách truyện không rỗng, hiển thị cảnh báo cho người dùng biết
                             val builder = AlertDialog.Builder(holder.itemView.context)
                             builder.setTitle("Xóa thể loại")
                             builder.setMessage("Thể loại này đang có ${snapshot.childrenCount} truyện. Bạn không thể xóa thể loại này!")
                             builder.setPositiveButton("OK") { _, _ -> }
                             builder.show()
                         } else {
-                            // Nếu danh sách truyện rỗng, thực hiện hiện lựa chọn có không rồi mới xóa
                             val builder = AlertDialog.Builder(holder.itemView.context)
                             builder.setTitle("Xóa thể loại")
                             builder.setMessage("Bạn có chắc chắn muốn xóa?")
                             builder.setPositiveButton("Có") { _, _ ->
-                                // Nếu người dùng đồng ý xóa thể loại, thực hiện xóa
                                 val dbRef = FirebaseDatabase.getInstance().getReference("TheLoai")
                                 dbRef.child(id!!).removeValue()
                                 Toast.makeText(holder.itemView.context, "Đã xóa thể loại", Toast.LENGTH_SHORT).show()
@@ -74,13 +67,13 @@ class TheLoaiAdapter(private var ds: ArrayList<TheLoaiModel>) :
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        // Xử lý khi truy vấn không thành công
                         Toast.makeText(holder.itemView.context, "Lỗi: " + error.message, Toast.LENGTH_SHORT).show()
                     }
                 })
             }
         } else {
             holder.btn_deleteTheLoai.visibility = android.view.View.GONE
+            holder.btn_editTheLoai.visibility = android.view.View.GONE
         }
 
         //item click go to TruyenListAdminActivity
@@ -98,5 +91,6 @@ class TheLoaiAdapter(private var ds: ArrayList<TheLoaiModel>) :
 
     class theLoaiViewHolder(val binding: LayoutTheloaiBinding) : RecyclerView.ViewHolder(binding.root) {
         val btn_deleteTheLoai = binding.btnDeleteTheLoai
+        val btn_editTheLoai = binding.btnEditTheLoai
     }
 }

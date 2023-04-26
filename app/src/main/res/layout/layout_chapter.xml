@@ -1,29 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              android:padding="8dp"
-              android:gravity="center_vertical">
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="9dp">
 
     <TextView
             android:id="@+id/tvChapterTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Chapter 1"
-            android:textSize="16sp"
-            android:paddingStart="15dp"
-            android:textStyle="bold" tools:ignore="RtlSymmetry"/>
+            android:text="@string/chapter_1"
+            android:textSize="14sp"
+            android:textColor="@color/gray02"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivViews"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintWidth_percent="0.6"/>
+
+    <ImageView
+            android:id="@+id/ivViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_remove_red_eye_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvChapterTitle"
+            app:layout_constraintEnd_toStartOf="@+id/tvViews"
+            app:layout_constraintBottom_toBottomOf="@+id/tvChapterTitle"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintWidth_percent="0.2"
+            android:contentDescription="@string/todo"/>
 
     <TextView
             android:id="@+id/tvViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1000 views"
-            android:textSize="12sp"
-            android:drawablePadding="8dp"
-            android:paddingEnd="15dp"
-            android:gravity="center_vertical" app:drawableStartCompat="@drawable/baseline_remove_red_eye_24"/>
+            android:text="@string/number"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivViews"
+            app:layout_constraintEnd_toStartOf="@+id/btn_deleteChapter"
+            app:layout_constraintBottom_toBottomOf="@+id/tvChapterTitle"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintWidth_percent="0.2"/>
 
-</LinearLayout>
+    <ImageButton
+            android:id="@+id/btn_deleteChapter"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/baseline_delete_outline_24"
+            android:contentDescription="@string/todo"
+            app:tint="@color/gray02"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/tvChapterTitle"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,4 +54,43 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"/>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignTop="@+id/llBottomBar"
+            android:background="@color/pink1" />
+    <LinearLayout
+            android:id="@+id/llBottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@color/pink1"
+            android:layout_alignParentBottom="true"
+            android:padding="4dp">
+
+        <ImageButton
+                android:id="@+id/btnPrevChapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:src="@drawable/baseline_keyboard_arrow_left_24"/>
+
+        <Spinner
+                android:id="@+id/spinnerChapter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+        <ImageButton
+                android:id="@+id/btnNextChapter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:src="@drawable/baseline_keyboard_arrow_right_24"/>
+    </LinearLayout>
 </RelativeLayout>

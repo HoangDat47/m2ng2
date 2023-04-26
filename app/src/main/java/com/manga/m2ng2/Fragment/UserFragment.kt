@@ -1,6 +1,5 @@
 package com.manga.m2ng2.Fragment
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
@@ -8,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -17,32 +15,20 @@ import android.widget.PopupMenu
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.manga.m2ng2.Activities.*
+import com.manga.m2ng2.Activities.LoginActivity
+import com.manga.m2ng2.Activities.MainActivity
 import com.manga.m2ng2.R
-import com.manga.m2ng2.adapter.TruyenAdapter
 import com.manga.m2ng2.databinding.FragmentUserBinding
-import com.manga.m2ng2.model.TruyenModel
 import com.manga.m2ng2.tools.CircleTransform
-import com.manga.m2ng2.tools.Constrains
 import com.manga.m2ng2.tools.Helper
 import com.squareup.picasso.Picasso
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [UserFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class UserFragment : Fragment(R.layout.fragment_user) {
     private lateinit var binding: FragmentUserBinding
     private lateinit var auth: FirebaseAuth
@@ -53,14 +39,17 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentUserBinding.inflate(inflater, container, false)
+        auth = FirebaseAuth.getInstance()
+        if(auth.currentUser == null){
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+        }
+        loadThongTinUser()
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        auth = FirebaseAuth.getInstance()
-        loadThongTinUser()
         binding.btnEditProfile.setOnClickListener {
             showEditText()
         }
@@ -78,7 +67,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         }
         binding.btnLogOut.setOnClickListener {
             auth.signOut()
-            checkUser()
+            startActivity(Intent(requireContext(), MainActivity::class.java))
         }
     }
 
@@ -265,19 +254,5 @@ class UserFragment : Fragment(R.layout.fragment_user) {
                 Log.d(TAG, "onCancelled: ${error.message}")
             }
         })
-    }
-
-    private fun checkUser() {
-        val firebaseUser = auth.currentUser
-        if (firebaseUser != null) {
-            //user is already logged in
-            val email = firebaseUser.email
-            Toast.makeText(requireContext(), "Đăng nhập bằng $email", Toast.LENGTH_SHORT).show()
-            var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
-        } else {
-            //user not logged in, go to login activity
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
-            requireActivity().finish()
-        }
     }
 }

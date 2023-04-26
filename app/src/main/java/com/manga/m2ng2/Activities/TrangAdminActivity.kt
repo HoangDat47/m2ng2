@@ -1,14 +1,11 @@
 package com.manga.m2ng2.Activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
 import com.manga.m2ng2.adapter.ViewPageAdapter
 import com.manga.m2ng2.databinding.ActivityTrangAdminBinding
 import com.manga.m2ng2.R
@@ -25,7 +22,6 @@ class TrangAdminActivity : AppCompatActivity() {
 
         //init firebase auth
         auth = FirebaseAuth.getInstance()
-        checkUser()
     }
 
     private fun setupTabLayout() {
@@ -79,20 +75,6 @@ class TrangAdminActivity : AppCompatActivity() {
             else -> {
                 R.drawable.ic_launcher_background
             }
-        }
-    }
-
-    private fun checkUser() {
-        val firebaseUser = auth.currentUser
-        if (firebaseUser != null) {
-            //user is already logged in
-            val email = firebaseUser.email
-            Toast.makeText(this, "Đăng nhập bằng $email", Toast.LENGTH_SHORT).show()
-            var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
-        } else {
-            //user not logged in, go to login activity
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
         }
     }
 }

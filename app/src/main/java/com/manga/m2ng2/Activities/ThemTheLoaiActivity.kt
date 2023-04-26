@@ -22,6 +22,9 @@ class ThemTheLoaiActivity : AppCompatActivity() {
         binding.btnThemTheLoai.setOnClickListener {
             validateData()
         }
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun validateData() {

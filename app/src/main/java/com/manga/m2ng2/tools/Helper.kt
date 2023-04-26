@@ -5,6 +5,7 @@ import android.content.Context
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.manga.m2ng2.Activities.TruyenDetailActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,10 +54,12 @@ class Helper : Application() {
             time
         }
     }
+
     fun convertChuoi(chuoi: String): String {
         return chuoi.replace(" ", "-")
     }
-    fun theoDoiTruyen(context: Context, truyenid:String) {
+
+    fun theoDoiTruyen(context: Context, truyenid: String) {
         var dbRef: DatabaseReference
         val auth = FirebaseAuth.getInstance()
         val firebaseUser = auth.currentUser
@@ -71,13 +74,13 @@ class Helper : Application() {
             dbRef.child(firebaseUser!!.uid).child("TheoDoi").child(truyenid).setValue(hashMap)
                 .addOnSuccessListener {
                     Toast.makeText(context, "Đã theo dõi truyện", Toast.LENGTH_SHORT).show()
-                } .addOnFailureListener {
+                }.addOnFailureListener {
                     Toast.makeText(context, "Lỗi: ${it.message}", Toast.LENGTH_SHORT).show()
                 }
         }
     }
 
-    fun huyTheoDoiTruyen (context: Context, truyenid:String) {
+    fun huyTheoDoiTruyen(context: Context, truyenid: String) {
         var dbRef: DatabaseReference
         var auth = FirebaseAuth.getInstance()
         val firebaseUser = auth.currentUser
@@ -88,9 +91,48 @@ class Helper : Application() {
             dbRef.child(firebaseUser!!.uid).child("TheoDoi").child(truyenid).removeValue()
                 .addOnSuccessListener {
                     Toast.makeText(context, "Đã hủy theo dõi truyện", Toast.LENGTH_SHORT).show()
-                } .addOnFailureListener {
+                }.addOnFailureListener {
                     Toast.makeText(context, "Lỗi: ${it.message}", Toast.LENGTH_SHORT).show()
                 }
+        }
+    }
+
+    fun themBinhLuan(truyenDetailActivity: TruyenDetailActivity, truyenid: String, comment: String) {
+        var dbRef: DatabaseReference
+        val auth = FirebaseAuth.getInstance()
+        val firebaseUser = auth.currentUser
+        if (firebaseUser == null) {
+            Toast.makeText(truyenDetailActivity, "Bạn chưa đăng nhập", Toast.LENGTH_SHORT).show()
+        } else {
+            //lay thong tin user hien tai
+            var userRef = FirebaseDatabase.getInstance().getReference("Users")
+            //lay ten user tu userref
+            userRef.child(firebaseUser.uid).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val username = snapshot.child("name").value.toString()
+                    val useravatar = snapshot.child("profileImage").value.toString()
+                    //them vao db
+                    val hashMap = HashMap<String, Any>()
+                    hashMap["id"] = System.currentTimeMillis().toString()
+                    hashMap["truyenid"] = truyenid
+                    hashMap["comment"] = comment
+                    hashMap["timestamp"] = System.currentTimeMillis()
+                    hashMap["uid"] = firebaseUser.uid
+                    hashMap["name"] = username
+                    hashMap["profileImage"] = useravatar
+                    dbRef = FirebaseDatabase.getInstance().getReference("Truyen/${truyenid}/BinhLuan")
+                    dbRef.child(System.currentTimeMillis().toString()).setValue(hashMap)
+                        .addOnSuccessListener {
+                            Toast.makeText(truyenDetailActivity, "Đã thêm bình luận", Toast.LENGTH_SHORT).show()
+                        }.addOnFailureListener {
+                            Toast.makeText(truyenDetailActivity, "Lỗi: ${it.message}", Toast.LENGTH_SHORT).show()
+                        }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(truyenDetailActivity, "Lỗi: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
     }
 

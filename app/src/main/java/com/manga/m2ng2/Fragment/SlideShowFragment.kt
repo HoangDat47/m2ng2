@@ -23,13 +23,8 @@ class SlideShowFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSlideShowBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         init()
         setupTranformer()
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -39,6 +34,7 @@ class SlideShowFragment : Fragment() {
                 super.onPageSelected(position)
             }
         })
+        return binding.root
     }
 
     private val slideRunnable = Runnable {

@@ -1,22 +1,24 @@
 package com.manga.m2ng2.Activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
+import com.manga.m2ng2.adapter.TheLoaiAdapter
 import com.manga.m2ng2.adapter.TruyenAdapter
 import com.manga.m2ng2.databinding.ActivityTruyenListAdminBinding
 import com.manga.m2ng2.model.TruyenModel
-import com.manga.m2ng2.tools.Helper
 import com.manga.m2ng2.tools.FilterTruyenAdmin
+import com.manga.m2ng2.tools.Helper
 
 class TruyenListAdminActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTruyenListAdminBinding
     private lateinit var ds1: ArrayList<TruyenModel>
     private lateinit var dbRef: DatabaseReference
     private lateinit var adapter: TruyenAdapter
+    private lateinit var filter: FilterTruyenAdmin
     private var theLoaiId: String? = null
     private var tenTheLoai: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,16 +29,22 @@ class TruyenListAdminActivity : AppCompatActivity() {
             theLoaiId = it.getString("theLoaiId")
             tenTheLoai = it.getString("tenTheLoai")
         }
+        adapter = TruyenAdapter(arrayListOf(),1)
         loadTruyenList()
+        if(this::filter.isInitialized){
+            filterSearch()
+        } else {
+            filter = FilterTruyenAdmin(ds1, adapter)
+            filterSearch()
+        }
+    }
+
+    private fun filterSearch() {
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // Do nothing
             }
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                //called as and when user types each letter
-                val originalList = ds1.clone() as ArrayList<TruyenModel>
-                val filter = FilterTruyenAdmin(originalList, adapter)
                 filter.filter(s)
             }
 
@@ -59,7 +67,7 @@ class TruyenListAdminActivity : AppCompatActivity() {
                         ds1.add(truyen!!)
                     }
                 }
-                adapter = TruyenAdapter(ds1)
+                adapter = TruyenAdapter(ds1,1)
                 binding.rvTruyen.adapter = adapter
 
                 //lang nghe su kien click item recyclerview
@@ -75,6 +83,7 @@ class TruyenListAdminActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                 })
+                filter = FilterTruyenAdmin(ds1, adapter)
             }
 
             override fun onCancelled(error: DatabaseError) {

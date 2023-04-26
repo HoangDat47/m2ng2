@@ -2,6 +2,8 @@ package com.manga.m2ng2.Fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,32 +18,24 @@ import com.manga.m2ng2.adapter.TheLoaiAdapter
 import com.manga.m2ng2.databinding.FragmentTheLoaiBinding
 import com.manga.m2ng2.model.TheLoaiModel
 import com.manga.m2ng2.tools.Constrains
+import com.manga.m2ng2.tools.FilterTheLoaiAdmin
+import com.manga.m2ng2.tools.FilterTruyenAdmin
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [TheLoaiFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class TheLoaiFragment : Fragment(R.layout.fragment_the_loai) {
     private lateinit var binding: FragmentTheLoaiBinding
     private lateinit var ds: ArrayList<TheLoaiModel>
     private lateinit var dbRef: DatabaseReference
     private lateinit var adapter: TheLoaiAdapter
+    private lateinit var filter: FilterTheLoaiAdmin
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        adapter = TheLoaiAdapter(arrayListOf())
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentTheLoaiBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         loadTheLoai()
         if (Constrains.userRole == "admin") {
             binding.linearLayout.visibility = View.VISIBLE
@@ -54,7 +48,31 @@ class TheLoaiFragment : Fragment(R.layout.fragment_the_loai) {
         } else {
             binding.linearLayout.visibility = View.GONE
         }
+
+        if (this::filter.isInitialized) {
+            filterSearch()
+        } else {
+            filter = FilterTheLoaiAdmin(ds, adapter)
+            filterSearch()
+        }
+        return binding.root
     }
+
+    private fun filterSearch() {
+        filter = FilterTheLoaiAdmin(ds, adapter)
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Do nothing
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filter.filter(s)
+            }
+            override fun afterTextChanged(s: Editable?) {
+                // Do nothing
+            }
+        })
+    }
+
 
     private fun loadTheLoai() {
         binding.rvTheLoai.layoutManager = LinearLayoutManager(requireContext())
@@ -74,11 +92,13 @@ class TheLoaiFragment : Fragment(R.layout.fragment_the_loai) {
                 adapter = TheLoaiAdapter(ds)
                 //set adapter to recyclerview
                 binding.rvTheLoai.adapter = adapter
+                filter = FilterTheLoaiAdmin(ds, adapter)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(requireContext(), "${error.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
             }
         })
     }
 }
+

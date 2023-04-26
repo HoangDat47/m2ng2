@@ -1,6 +1,7 @@
 package com.manga.m2ng2.Activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,13 +9,17 @@ import android.widget.Toast
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.manga.m2ng2.adapter.ChapterAdapter
 import com.manga.m2ng2.databinding.ActivityChapterViewBinding
+import com.manga.m2ng2.model.ChapterModel
 import com.manga.m2ng2.tools.Constrains
 
 class ChapterViewActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChapterViewBinding
     private lateinit var dbRef: DatabaseReference
+    private lateinit var ds2: ArrayList<ChapterModel>
     private lateinit var storageReference: StorageReference
+    private lateinit var adapter: ChapterAdapter
     private var chapterid: String? = null
     private var pdfUrl: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {

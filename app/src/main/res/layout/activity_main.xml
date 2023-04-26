@@ -20,6 +20,6 @@
             android:text="@string/guest"
             android:layout_width="match_parent"
             android:background="@drawable/shape_btn02"
-            android:textColor="@color/purple_500"
+            android:textColor="@color/pink1"
             android:layout_height="wrap_content" android:id="@+id/btn_skip_login"/>
 </LinearLayout>

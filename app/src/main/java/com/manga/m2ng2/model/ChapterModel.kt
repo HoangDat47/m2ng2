@@ -6,6 +6,6 @@ class ChapterModel (
     var truyenId: String? = null,
     var timestamp: Long? = null,
     var uid: String? = null,
-    var pdfUrl: String? = null
+    var chapterView: Int? = null
 ) {
 }

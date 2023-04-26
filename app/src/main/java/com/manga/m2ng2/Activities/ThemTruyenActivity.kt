@@ -48,7 +48,9 @@ class ThemTruyenActivity : AppCompatActivity() {
         binding.btnThemPDF.setOnClickListener {
             validateData()
         }
-
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun validateData() {

@@ -7,6 +7,20 @@
     <style name="TabLayoutTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">11sp</item>
     </style>
-    <attr name="tabIconSize" format="dimension" />
+    <attr name="tabIconSize" format="dimension"/>
     <dimen name="my_dimension">20dp</dimen>
+    <style name="titleTrangChu">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/pink1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="CustomDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    <style name="CircleImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

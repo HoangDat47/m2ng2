@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private var backButtonPressed: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -22,9 +24,15 @@ class SplashActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             delay(1000L)
-            checkUser()
+            if (!backButtonPressed) {
+                checkUser()
+            }
         }
+    }
 
+    override fun onBackPressed() {
+        backButtonPressed = true
+        super.onBackPressed()
     }
 
     private fun checkUser() {
@@ -38,6 +46,7 @@ class SplashActivity : AppCompatActivity() {
                 Constrains.userRole = it.child("userType").value.toString()
                 val intent = Intent(this, TrangAdminActivity::class.java)
                 startActivity(intent)
+                finish()
             }
         } else {
             //user not logged in, go to main activity

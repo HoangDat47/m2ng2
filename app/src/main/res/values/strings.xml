@@ -43,4 +43,15 @@
     <string name="ti_ng_vi_t">Tiếng Việt</string>
     <string name="li_n_h">Liên hệ</string>
     <string name="dat47707_gmail_com">Dat47707@gmail.com</string>
+    <string name="t_t_c_truy_n">Tất cả truyện</string>
+    <string name="chapter">Chapter</string>
+    <string name="b_nh_lu_n">Bình luận</string>
+    <string name="ng">Đăng</string>
+    <string name="nguy_n_v_n_a">Nguyễn Văn A</string>
+    <string name="m_t_c_i_comment_d_i_ngo_ng_n_o_t_user">Một cái comment dài ngoằng nào đó từ user</string>
+    <string name="number">number</string>
+    <string name="phi_n_b_n">Phiên bản</string>
+    <string name="_1_0_0">1.0.0</string>
+    <string name="xem_th_m">Xem thêm</string>
+    <string name="thu_g_n">Thu gọn</string>
 </resources>

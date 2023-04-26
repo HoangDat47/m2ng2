@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_margin="3dp"
+        android:layout_margin="8dp"
         app:cardElevation="8dp"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="#FDD835">
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
             android:outlineProvider="bounds"
-            android:layout_gravity="center_vertical">
-        <TextView android:layout_width="0dp"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/tv_TheLoai"
-                  android:layout_gravity="center_vertical"
-                  android:text="@string/th_lo_i"
-                  android:paddingStart="20dp"
-                  android:layout_weight="1"
-                  android:textSize="20sp"
-                  android:textColor="@color/black"/>
-        <ImageButton android:layout_width="45dp"
-                     android:layout_height="45dp"
-                     android:layout_gravity="center_vertical"
-                     android:layout_marginEnd="2dp"
-                     android:id="@+id/btn_deleteTheLoai"
-                     android:src="@drawable/baseline_delete_outline_24"
-                     android:background="@drawable/shape_btn03"
-                     android:contentDescription="@string/todo"/>
+            android:layout_gravity="center_vertical"
+            android:background="@color/gray04">
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_TheLoai"
+                android:layout_gravity="center_vertical"
+                android:text="@string/th_lo_i"
+                android:textSize="20sp"
+                android:paddingStart="20dp"
+                android:layout_weight="1"
+                android:textColor="@color/pink1" tools:ignore="RtlSymmetry"/>
+        <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/btn_editTheLoai"
+                android:src="@drawable/baseline_edit_24"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/todo"/>
+        <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/btn_deleteTheLoai"
+                android:src="@drawable/baseline_delete_outline_24"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/todo"/>
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

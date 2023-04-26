@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/gray03"
+        android:background="@color/pink1"
         tools:context=".Fragment.TheLoaiFragment">
     <EditText
             android:id="@+id/edt_search"
@@ -34,7 +34,7 @@
             android:layout_margin="6dp"
             android:elevation="8dp"
             android:orientation="horizontal"
-            android:background="@color/gray04"
+            android:background="#FFFFFF"
             android:padding="10dp">
 
         <Button
@@ -44,7 +44,8 @@
                 android:layout_weight="1"
                 android:text="@string/th_m_th_lo_i"
                 android:drawableLeft="@drawable/tab_the_loai"
-                android:background="@drawable/shape_btn01"/>
+                android:background="@drawable/shape_btn01"
+                android:textColor="#FFFFFF"/>
         <Button
                 android:id="@+id/them_truyen"
                 android:layout_width="0dp"
@@ -53,8 +54,8 @@
                 android:layout_marginStart="10dp"
                 android:drawableLeft="@drawable/baseline_book_online_24"
                 android:text="@string/th_m_truy_n"
-
-                android:background="@drawable/shape_btn01"/>
+                android:background="@drawable/shape_btn01"
+                android:textColor="#FFFFFF"/>
     </LinearLayout>
 
 </LinearLayout>

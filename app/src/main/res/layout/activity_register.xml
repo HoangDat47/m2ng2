@@ -22,7 +22,7 @@
                     android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    android:textColor="@color/pink1"
                     android:text="@string/ng_k"
                     android:textSize="30sp"/>
             <com.google.android.material.textfield.TextInputLayout

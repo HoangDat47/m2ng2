@@ -80,8 +80,6 @@ class TruyenAdapter(
             }
             truyenViewHolder2.binding.tvTenTruyen.text = tenTruyen
         }
-
-
     }
 
 

@@ -103,6 +103,9 @@ class TruyenDetailActivity : AppCompatActivity() {
                 openThemBinhLuanDialog()
             }
         }
+        binding.btnDeleteTruyen.setOnClickListener {
+            Helper().xoaTruyen(this, truyenid!!)
+        }
         binding.btnXemThem.setOnClickListener {
             // Hiển thị rvListChapter và nút Thu gọn
             binding.rvListChapter.visibility = View.VISIBLE

@@ -77,7 +77,7 @@ class ThemTruyenActivity : AppCompatActivity() {
 
     private fun uploadAnh() {
         Log.d(TAG, "uploadAnh: BẮT ĐẦU UPLOAD ẢNH")
-        var filePathAndName = "Truyen/$timestamp"
+        val filePathAndName = "Truyen/$timestamp"
         storageReference = FirebaseStorage.getInstance().getReference(filePathAndName)
         storageReference.putFile(anhUri!!).addOnSuccessListener {
             Log.d(TAG, "onSuccess: ẢNH ĐÃ ĐƯỢC UPLOAD")
@@ -90,7 +90,7 @@ class ThemTruyenActivity : AppCompatActivity() {
 
     private fun uploadAnhToDb(downloadUri: Uri?, timestamp: Long) {
         Log.d(TAG, "uploadAnhToDb: BẮT ĐẦU UPLOAD ẢNH VÀO DB")
-        var uid = auth.uid
+        val uid = auth.uid
         hashMap["uid"] = uid.toString()
         hashMap["id"] = timeString
         hashMap["title"] = title
@@ -140,7 +140,7 @@ class ThemTruyenActivity : AppCompatActivity() {
 
 
     private fun theLoaiPickDialog() {
-        val items = ds.map { "${it.id} - ${it.theLoai}" }.toTypedArray()
+        val items = ds.map { "${it.theLoai}" }.toTypedArray()
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Chọn thể loại")
             .setItems(items) { _, which ->
@@ -162,6 +162,7 @@ class ThemTruyenActivity : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_CODE)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {

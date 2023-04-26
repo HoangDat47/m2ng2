@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.manga.m2ng2.Activities.ThemTheLoaiActivity
 import com.manga.m2ng2.Activities.ThemTruyenActivity
@@ -27,8 +28,10 @@ class TheLoaiFragment : Fragment(R.layout.fragment_the_loai) {
     private lateinit var dbRef: DatabaseReference
     private lateinit var adapter: TheLoaiAdapter
     private lateinit var filter: FilterTheLoaiAdmin
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
         adapter = TheLoaiAdapter(arrayListOf())
     }
     override fun onCreateView(

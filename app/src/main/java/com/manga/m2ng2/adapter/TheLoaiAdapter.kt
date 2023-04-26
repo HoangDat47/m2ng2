@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -41,7 +42,7 @@ class TheLoaiAdapter(private var ds: ArrayList<TheLoaiModel>) :
         //set data
         holder.binding.tvTheLoai.text = theLoai.theLoai
         if (Constrains.userRole == "admin") {
-            holder.btn_deleteTheLoai.setOnClickListener {
+            holder.binding.btnDeleteTheLoai.setOnClickListener {
                 val truyenRef = FirebaseDatabase.getInstance().getReference("Truyen")
                 val query = truyenRef.orderByChild("theLoaiId").equalTo(id)
                 query.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -72,8 +73,18 @@ class TheLoaiAdapter(private var ds: ArrayList<TheLoaiModel>) :
                 })
             }
         } else {
-            holder.btn_deleteTheLoai.visibility = android.view.View.GONE
-            holder.btn_editTheLoai.visibility = android.view.View.GONE
+            holder.binding.btnDeleteTheLoai.visibility = View.GONE
+            holder.binding.btnEditTheLoai.visibility = View.GONE
+        }
+
+        holder.binding.btnEditTheLoai.setOnClickListener {
+            showEditText(holder)
+        }
+        holder.binding.btnCancel.setOnClickListener {
+            cancelEditText(holder)
+        }
+        holder.binding.btnDone.setOnClickListener {
+            saveEditText(holder)
         }
 
         //item click go to TruyenListAdminActivity
@@ -85,12 +96,51 @@ class TheLoaiAdapter(private var ds: ArrayList<TheLoaiModel>) :
         }
     }
 
+    private fun saveEditText(holder: TheLoaiAdapter.theLoaiViewHolder) {
+        val theLoai = holder.binding.edtTheLoai.text.toString().trim()
+        if (theLoai.isEmpty()) {
+            holder.binding.edtTheLoai.error = "Không được để trống"
+            holder.binding.edtTheLoai.requestFocus()
+            return
+        }
+        val dbRef = FirebaseDatabase.getInstance().getReference("TheLoai")
+        dbRef.child(ds[holder.adapterPosition].id!!).child("theLoai").setValue(theLoai)
+            .addOnSuccessListener {
+                Toast.makeText(holder.itemView.context, "Đã lưu thay đổi", Toast.LENGTH_SHORT).show()
+            } .addOnCanceledListener {
+                Toast.makeText(holder.itemView.context, "Lưu thay đổi thất bại", Toast.LENGTH_SHORT).show()
+            }
+        hideEditText(holder)
+    }
+
+    private fun cancelEditText(holder: TheLoaiAdapter.theLoaiViewHolder) {
+        hideEditText(holder)
+        holder.binding.edtTheLoai.setText(holder.binding.tvTheLoai.text)
+    }
+
+    private fun hideEditText(holder: TheLoaiAdapter.theLoaiViewHolder) {
+        holder.binding.edtTheLoai.visibility = View.GONE
+        holder.binding.tvTheLoai.visibility = View.VISIBLE
+        holder.binding.btnEditTheLoai.visibility = View.VISIBLE
+        holder.binding.btnDeleteTheLoai.visibility = View.VISIBLE
+        holder.binding.btnDone.visibility = View.GONE
+        holder.binding.btnCancel.visibility = View.GONE
+        holder.binding.edtTheLoai.setText(holder.binding.tvTheLoai.text)
+    }
+
+    private fun showEditText(holder: theLoaiViewHolder) {
+        holder.binding.edtTheLoai.visibility = View.VISIBLE
+        holder.binding.tvTheLoai.visibility = View.GONE
+        holder.binding.btnEditTheLoai.visibility = View.GONE
+        holder.binding.btnDeleteTheLoai.visibility = View.GONE
+        holder.binding.btnDone.visibility = View.VISIBLE
+        holder.binding.btnCancel.visibility = View.VISIBLE
+        holder.binding.edtTheLoai.setText(holder.binding.tvTheLoai.text)
+    }
+
     override fun getItemCount(): Int {
         return ds.size
     }
 
-    class theLoaiViewHolder(val binding: LayoutTheloaiBinding) : RecyclerView.ViewHolder(binding.root) {
-        val btn_deleteTheLoai = binding.btnDeleteTheLoai
-        val btn_editTheLoai = binding.btnEditTheLoai
-    }
+    class theLoaiViewHolder(val binding: LayoutTheloaiBinding) : RecyclerView.ViewHolder(binding.root)
 }

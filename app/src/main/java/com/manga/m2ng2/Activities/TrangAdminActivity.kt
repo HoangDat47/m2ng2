@@ -1,5 +1,6 @@
 package com.manga.m2ng2.Activities
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
@@ -23,6 +24,24 @@ class TrangAdminActivity : AppCompatActivity() {
         //init firebase auth
         auth = FirebaseAuth.getInstance()
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Xác nhận thoát ứng dụng")
+        builder.setMessage("Bạn có muốn thoát ứng dụng?")
+        builder.setPositiveButton("Có") { dialog, _ ->
+            // Thoát ứng dụng
+            finish()
+        }
+        builder.setNegativeButton("Không") { dialog, _ ->
+            // Hủy bỏ việc thoát ứng dụng
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
 
     private fun setupTabLayout() {
         val vpAdapter = ViewPageAdapter(supportFragmentManager, lifecycle)

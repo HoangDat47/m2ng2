@@ -2,9 +2,14 @@ package com.manga.m2ng2.tools
 
 import android.app.Application
 import android.content.Context
+import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
+import com.manga.m2ng2.Activities.ThemTruyenActivity
 import com.manga.m2ng2.Activities.TruyenDetailActivity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -136,4 +141,37 @@ class Helper : Application() {
         }
     }
 
+    fun xoaTruyen(truyenDetailActivity: TruyenDetailActivity, truyenid: String) {
+        val truyenRef: DatabaseReference
+        val auth = FirebaseAuth.getInstance()
+        val firebaseUser = auth.currentUser
+        val filePathAndName = "Truyen/${truyenid}/"
+        if (firebaseUser != null && Constrains.userRole == "admin") {
+            truyenRef = FirebaseDatabase.getInstance().getReference("Chapter")
+            truyenRef.child(truyenid).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        Toast.makeText(truyenDetailActivity, "Truyện này có chương, không thể xóa", Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        //xoa truyen
+                        FirebaseDatabase.getInstance().getReference("Truyen").child(truyenid).removeValue()
+                        val storageReference = FirebaseStorage.getInstance().reference.child(filePathAndName)
+                        storageReference.delete().addOnSuccessListener {
+                            Toast.makeText(truyenDetailActivity, "Đã xóa truyện", Toast.LENGTH_SHORT).show()
+                            truyenDetailActivity.finish()
+                        }.addOnFailureListener {
+                            Toast.makeText(truyenDetailActivity, "Lỗi: ${it.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(truyenDetailActivity, "Lỗi: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        } else {
+            Toast.makeText(truyenDetailActivity, "Bạn chưa đăng nhập", Toast.LENGTH_SHORT).show()
+        }
+    }
 }

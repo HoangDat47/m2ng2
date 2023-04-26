@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/pink1"
+        android:background="@drawable/gradient_background"
         tools:context=".Fragment.TheLoaiFragment">
     <EditText
             android:id="@+id/edt_search"
@@ -42,9 +42,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/th_m_th_lo_i"
-                android:drawableLeft="@drawable/tab_the_loai"
-                android:background="@drawable/shape_btn01"
+                android:text="@string/th_lo_i"
+                android:drawableLeft="@drawable/baseline_add_24"
+                android:backgroundTint="@color/pink1"
                 android:textColor="#FFFFFF"/>
         <Button
                 android:id="@+id/them_truyen"
@@ -52,9 +52,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="10dp"
-                android:drawableLeft="@drawable/baseline_book_online_24"
-                android:text="@string/th_m_truy_n"
-                android:background="@drawable/shape_btn01"
+                android:drawableLeft="@drawable/baseline_bookmark_add_24"
+                android:text="@string/truy_n"
+                android:backgroundTint="@color/pink1"
                 android:textColor="#FFFFFF"/>
     </LinearLayout>
 

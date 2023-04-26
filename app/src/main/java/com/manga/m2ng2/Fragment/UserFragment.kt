@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.Task
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -26,6 +27,7 @@ import com.manga.m2ng2.Activities.MainActivity
 import com.manga.m2ng2.R
 import com.manga.m2ng2.databinding.FragmentUserBinding
 import com.manga.m2ng2.tools.CircleTransform
+import com.manga.m2ng2.tools.Constrains
 import com.manga.m2ng2.tools.Helper
 import com.squareup.picasso.Picasso
 
@@ -36,6 +38,10 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     private lateinit var storageReference: StorageReference
     private var ImageUri: Uri? = null
     private var TAG = "PROFILE_TAG"
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(requireContext())
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,6 +73,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         }
         binding.btnLogOut.setOnClickListener {
             auth.signOut()
+            Constrains.userRole = "signOut"
             startActivity(Intent(requireContext(), MainActivity::class.java))
         }
     }
@@ -204,8 +211,6 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         binding.tvName.visibility = View.VISIBLE
         binding.llEditProfile.visibility = View.GONE
         binding.btnEditProfile.visibility = View.VISIBLE
-        val params = binding.tvMail.layoutParams as RelativeLayout.LayoutParams
-        params.addRule(RelativeLayout.BELOW, R.id.tvName)
     }
 
     private fun cancelEditText() {
@@ -218,8 +223,6 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         binding.tvName.visibility = View.GONE
         binding.llEditProfile.visibility = View.VISIBLE
         binding.btnEditProfile.visibility = View.GONE
-        val params = binding.tvMail.layoutParams as RelativeLayout.LayoutParams
-        params.addRule(RelativeLayout.BELOW, R.id.edtName)
         binding.edtName.setText(binding.tvName.text)
     }
 

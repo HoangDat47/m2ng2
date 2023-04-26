@@ -25,6 +25,44 @@
                 android:paddingStart="20dp"
                 android:layout_weight="1"
                 android:textColor="@color/pink1" tools:ignore="RtlSymmetry"/>
+        <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/edtTheLoai"
+                android:background="@drawable/shape_edt01"
+                android:drawableStart="@drawable/baseline_category_24"
+                android:drawablePadding="10dp"
+                android:hint="@string/th_lo_i"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="10dp"
+                android:visibility="gone"
+                android:textSize="20sp"
+                android:inputType="textPersonName|textCapWords"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray01" android:autofillHints=""/>
+        <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/btn_cancel"
+                android:visibility="gone"
+                android:src="@drawable/baseline_cancel_24"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/todo"
+                app:tint="#050505"/>
+        <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/btn_done"
+                android:visibility="gone"
+                android:src="@drawable/baseline_done_24"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/todo"
+                app:tint="#050505"/>
         <ImageButton
                 android:layout_width="48dp"
                 android:layout_height="48dp"

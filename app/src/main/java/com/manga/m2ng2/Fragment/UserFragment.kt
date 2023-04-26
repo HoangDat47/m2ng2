@@ -47,11 +47,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     private lateinit var binding: FragmentUserBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var dbRef: DatabaseReference
-    private lateinit var userRef: DatabaseReference
     private lateinit var storageReference: StorageReference
-    private lateinit var ds1: ArrayList<TruyenModel>
-    private lateinit var adapter: TruyenAdapter
-    private var truyenId: String? = null
     private var ImageUri: Uri? = null
     private var TAG = "PROFILE_TAG"
     override fun onCreateView(
@@ -136,7 +132,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         } else {
             dbRef = FirebaseDatabase.getInstance().getReference("Users")
             dbRef.child(auth.uid!!).child("profileImage").setValue(imageUrl)
-            Picasso.get().load(imageUrl).into(binding.imgProfile)
+            Picasso.get().load(imageUrl).transform(CircleTransform()).placeholder(R.drawable.baseline_person_24).into(binding.imgProfile)
             binding.btnLuuImage.visibility = View.GONE
             binding.btnEditProfile.visibility = View.VISIBLE
         }
@@ -257,8 +253,12 @@ class UserFragment : Fragment(R.layout.fragment_user) {
                 binding.tvMemberSince.text = formatDate
                 binding.tvAccount.text = userType
 
-                //set Image using Picasso
-                Picasso.get().load(profileImage).transform(CircleTransform()).placeholder(R.drawable.baseline_person_24).into(binding.imgProfile)
+                //set Image using Picasso if image is not empty
+                if (profileImage != "") {
+                    Picasso.get().load(profileImage).transform(CircleTransform()).placeholder(R.drawable.baseline_person_24).into(binding.imgProfile)
+                } else {
+                    Picasso.get().load(R.drawable.baseline_person_24).into(binding.imgProfile)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {

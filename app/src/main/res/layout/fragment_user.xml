@@ -183,18 +183,120 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/gray03"
             android:id="@+id/view"
             android:layout_below="@+id/llInfo"/>
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/llInfo">
-        <Button
+            android:elevation="8dp"
+            android:background="@color/white"
+            android:layout_below="@id/llInfo"
+            android:orientation="vertical" android:layout_marginTop="20dp" android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp" android:layout_marginBottom="20dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal">
+
+            <TextView
+                    android:id="@+id/language"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ng_n_ng"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:drawablePadding="10dp"
+                    app:drawableStartCompat="@drawable/baseline_language_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ti_ng_vi_t"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent" android:id="@+id/textView2"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal">
+
+            <TextView
+                    android:id="@+id/UpdateInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phiên bản"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:drawablePadding="10dp"
+                    app:drawableStartCompat="@drawable/baseline_priority_high_24"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1.0.0"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal">
+
+            <TextView
+                    android:id="@+id/AdminInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/li_n_h"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:drawablePadding="10dp"
+                    app:drawableStartCompat="@drawable/baseline_groups_24"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dat47707_gmail_com"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent" android:id="@+id/textView"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
                 android:id="@+id/btn_logOut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/ng_xu_t"/>
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="25dp"
+                android:text="@string/ng_xu_t"
+                android:textColor="@color/purple_500"
+                android:textSize="18sp"
+                android:drawablePadding="10dp"
+                app:drawableStartCompat="@drawable/baseline_logout_24"/>
     </LinearLayout>
 </RelativeLayout>

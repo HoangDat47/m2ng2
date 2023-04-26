@@ -39,4 +39,8 @@
     <string name="member">Member</string>
     <string name="truy_n_theo_d_i">Truyện theo dõi: %d</string>
     <string name="update">Update</string>
+    <string name="ng_n_ng">Ngôn ngữ</string>
+    <string name="ti_ng_vi_t">Tiếng Việt</string>
+    <string name="li_n_h">Liên hệ</string>
+    <string name="dat47707_gmail_com">Dat47707@gmail.com</string>
 </resources>

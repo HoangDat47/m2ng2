@@ -65,7 +65,7 @@ class ProfileActivity : AppCompatActivity() {
         } else {
             Log.d(TAG, "uploadImage: ${ImageUri.toString()}")
             val filePathAndName = "Profile_Images/${auth.currentUser?.uid}"
-            val storageReference = FirebaseStorage.getInstance().reference.child(filePathAndName)
+            storageReference = FirebaseStorage.getInstance().reference.child(filePathAndName)
 
             // Delete old profile image
             storageReference.delete().addOnSuccessListener {

@@ -54,8 +54,9 @@ class TrangAdminActivity : AppCompatActivity() {
             Toast.makeText(this, "Đăng nhập bằng $email", Toast.LENGTH_SHORT).show()
             var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
         } else {
-            //user not logged in, thông báo vào với vai trò guess
-            Toast.makeText(this, "Vào với vai trò guess", Toast.LENGTH_SHORT).show()
+            //user not logged in, go to login activity
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
     }
 }

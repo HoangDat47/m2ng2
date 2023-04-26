@@ -44,13 +44,12 @@ class TheLoaiFragment : Fragment(R.layout.fragment_the_loai) {
         super.onViewCreated(view, savedInstanceState)
         loadTheLoai()
         if (Constrains.userRole == "admin") {
-            binding.linearLayout.setOnClickListener {
-                binding.btnThemTheLoai.setOnClickListener {
-                    startActivity(Intent(requireContext(), ThemTheLoaiActivity::class.java))
-                }
-                binding.themTruyen.setOnClickListener {
-                    startActivity(Intent(requireContext(), ThemTruyenActivity::class.java))
-                }
+            binding.linearLayout.visibility = View.VISIBLE
+            binding.btnThemTheLoai.setOnClickListener {
+                startActivity(Intent(requireContext(), ThemTheLoaiActivity::class.java))
+            }
+            binding.themTruyen.setOnClickListener {
+                startActivity(Intent(requireContext(), ThemTruyenActivity::class.java))
             }
         } else {
             binding.linearLayout.visibility = View.GONE

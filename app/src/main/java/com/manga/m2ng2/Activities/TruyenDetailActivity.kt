@@ -243,10 +243,12 @@ class TruyenDetailActivity : AppCompatActivity() {
                         val chapterid = ds2[position].id
                         val intent = Intent(this@TruyenDetailActivity, ChapterViewActivity::class.java)
                         val chapterViewRef = FirebaseDatabase.getInstance().getReference("Chapter/$truyenid")
-                        if(auth.currentUser != null){
-                            chapterViewRef.child(chapterid.toString()).child("chapterView").setValue(ds2[position].chapterView?.plus(
-                                1
-                            ))
+                        if (auth.currentUser != null) {
+                            chapterViewRef.child(chapterid.toString()).child("chapterView").setValue(
+                                ds2[position].chapterView?.plus(
+                                    1
+                                )
+                            )
                         }
                         intent.putExtra("chapterid", chapterid.toString())
                         intent.putExtra("truyenid", ds2[position].truyenId)
@@ -288,6 +290,9 @@ class TruyenDetailActivity : AppCompatActivity() {
             tenchapter = edtChapterName.text.toString().trim()
             if (tenchapter.isEmpty()) {
                 edtChapterName.error = "Tên chapter không được để trống"
+                return@setOnClickListener
+            } else if (ds2.any { it.title == tenchapter }) {
+                edtChapterName.error = "Tên chapter đã tồn tại"
                 return@setOnClickListener
             } else if (pdfUri == null) {
                 Toast.makeText(this, "Vui lòng chọn file PDF", Toast.LENGTH_SHORT).show()

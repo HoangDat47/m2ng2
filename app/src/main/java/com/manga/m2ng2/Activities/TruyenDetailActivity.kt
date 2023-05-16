@@ -289,9 +289,6 @@ class TruyenDetailActivity : AppCompatActivity() {
             if (tenchapter.isEmpty()) {
                 edtChapterName.error = "Tên chapter không được để trống"
                 return@setOnClickListener
-            } else if (ds2.any { it.title == tenchapter }) {
-                edtChapterName.error = "Tên chapter đã tồn tại"
-                return@setOnClickListener
             } else if (pdfUri == null) {
                 Toast.makeText(this, "Vui lòng chọn file PDF", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -305,9 +302,9 @@ class TruyenDetailActivity : AppCompatActivity() {
                     while (!uriTask.isSuccessful);
                     val downloadUri = uriTask.result
                     uploadPDFToDb(downloadUri, timestamp, tenchapter)
-                    binding.rvListChapter.adapter?.notifyDataSetChanged()
-                    alertDialog.dismiss()
                 }
+                binding.rvListChapter.adapter?.notifyDataSetChanged()
+                alertDialog.dismiss()
             }
         }
     }
